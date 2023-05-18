@@ -27,12 +27,21 @@
  *                 data:
  *                   type: object
  *                   properties:
+ *                     id:
+ *                       type: string
  *                     email:
  *                       type: string
  *                     name:
  *                       type: string
  *                     alamat:
- *                       type: string
+ *                       type: object
+ *                       properties:
+ *                         negara:
+ *                           type: string
+ *                         kota:
+ *                           type: string
+ *                         deskripsi_alamat:
+ *                           type: string
  *                     role:
  *                       type: string
  *                     profil_link:
@@ -73,9 +82,15 @@
  *                 type: string
  *                 required: true
  *                 description: nama minimal 4 karakter
- *               alamat:
+ *               negara:
  *                 type: string
- *                 description: format bisa "Kota, Kecamatan, Deskripsi tambahan"
+ *                 description: bagian dari alamat
+ *               kota:
+ *                 type: string
+ *                 description: bagian dari alamat
+ *               deskripsi_alamat:
+ *                 type: string
+ *                 description: bagian dari alamat
  *               telepon:
  *                 type: string
  *               deskripsi:
@@ -105,7 +120,14 @@
  *                     name:
  *                       type: string
  *                     alamat:
- *                       type: string
+ *                       type: object
+ *                       properties:
+ *                         negara:
+ *                           type: string
+ *                         kota:
+ *                           type: string
+ *                         deskripsi_alamat:
+ *                           type: string
  *                     telepon:
  *                       type: string
  *                     deskripsi:

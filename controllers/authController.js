@@ -26,7 +26,13 @@ exports.signup = async (req, res, next) => {
         const password = req.body.password
         const name = req.body.name
         const role = req.body.role
-        const alamat = req.body.alamat
+        // *! const alamat = req.body.alamat // alamat diubah jadi negara, kota deskripsi
+        const negara = req.body.negara
+        const kota = req.body.kota
+        const deskripsi_alamat = req.body.deskripsi_alamat
+        const alamat = {
+            negara: negara, kota: kota, deskripsi_alamat : deskripsi_alamat
+        }
         let telepon = req.body.telepon
 
         if(telepon.startsWith("0")) {
@@ -90,7 +96,6 @@ exports.login = async (req, res, next) => {
     }
 
     try {
-
         const errors = validationResult(req)
         if(!errors.isEmpty()){
             const err = new Error('email/ password salah!')
@@ -139,6 +144,9 @@ exports.login = async (req, res, next) => {
     }
 
 }
+
+
+
 
 
 exports.logout = async (req, res, next) => {

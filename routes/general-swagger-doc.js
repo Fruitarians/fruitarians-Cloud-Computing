@@ -33,8 +33,14 @@
  *                   type: integer
  *                   example: 85726568163
  *               alamat:
- *                   type: string
- *                   example: Purbalingga, Kec Kalimanah, RT01/RW10, Depan sate Blater
+ *                   type: object
+ *                   properties:
+ *                     negara:
+ *                       type: string
+ *                     kota:
+ *                       type: string
+ *                     deskripsi_alamat:
+ *                       type: string
  *               createdAt:
  *                   type: string
  *                   example: 15 Mei 2023

@@ -27,6 +27,8 @@ exports.detailBuah = async (req, res, next) => {
             throw err
         }
 
+        buah.harga = parseInt(buah.harga)
+
         res.status(statusCode['200_ok']).json({
             errors: false,
             toko: {
@@ -68,12 +70,14 @@ exports.getAllBuah = async (req, res, next) => {
         let dataBuah = []
         allBuah.forEach(doc => {
             const buahdata = {buahId : doc.id, ...doc.data()}
+            buahdata.harga = parseInt(buahdata.harga)
             dataBuah.push(buahdata)
         })
 
         res.status(statusCode['200_ok']).json({
             errors: false,
             toko: {
+                id: req.userId,
                 name: user.name,
                 email: user.email,
                 telepon: user.telepon,
@@ -103,7 +107,7 @@ exports.getAllBuah = async (req, res, next) => {
 exports.createBuah = async (req, res, next) => {
     try {
         const user = (await db.collection('users').doc(req.userId).get()).data()
-        //console.log(user)
+
         if(!user || user.role !== 'toko'){
             const err = new Error('Not authorized user')
             err.statusCode = statusCode['401_unauthorized']
@@ -111,7 +115,7 @@ exports.createBuah = async (req, res, next) => {
         }
 
         const name = req.body.name
-        const harga = req.body.harga
+        const harga = parseInt(req.body.harga)
         const satuan = req.body.satuan
         const deskripsi = req.body.deskripsi
         const creator = req.userId
@@ -188,7 +192,7 @@ exports.createBuah = async (req, res, next) => {
 exports.editBuah = async (req, res, next) => {
     try {
         const user = (await db.collection('users').doc(req.userId).get()).data()
-        //console.log(user)
+
         if(!user || user.role !== 'toko'){
             const err = new Error('Not authorized user')
             err.statusCode = statusCode['401_unauthorized']
@@ -209,7 +213,7 @@ exports.editBuah = async (req, res, next) => {
         //const newGambar = req.body.gambar
 
         buahEdit.name = newName
-        buahEdit.harga = newHarga
+        buahEdit.harga = parseInt(newHarga)
         buahEdit.satuan = newSatuan
         buahEdit.deskripsi = newDeskripsi
 
@@ -276,7 +280,7 @@ exports.deleteBuah = async (req, res, next) => {
             throw err
         }
 
-        //const buahHapus = await Buah.findById(req.body.buahId)
+
         const buahHapus = (await db.collection('buah').doc(req.body.buahId).get()).data()
         if(!buahHapus || buahHapus.creator.toString() !== req.userId){
             const err = new Error('Not authorized user')

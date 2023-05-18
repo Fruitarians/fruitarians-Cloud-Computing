@@ -96,6 +96,8 @@
  *                 toko:
  *                   type: object
  *                   properties:
+ *                     id:
+ *                       type: string
  *                     name:
  *                       type: string
  *                     email:
@@ -105,7 +107,14 @@
  *                     wa_link:
  *                       type: string
  *                     alamat:
- *                       type: string
+ *                       type: object
+ *                       properties:
+ *                         negara:
+ *                           type: string
+ *                         kota:
+ *                           type: string
+ *                         deskripsi_alamat:
+ *                           type: string
  *                     deskripsi:
  *                       type: string
  *                     jam_operasional:

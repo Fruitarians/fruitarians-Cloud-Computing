@@ -21,7 +21,7 @@ exports.getAllRole = async (req, res, next) => {
     try {
 
         const role = req.params.role // role hanya terima vendor/ toko
-        console.log(role)
+        // console.log(role)
         if( role !== 'toko' && role !== 'vendor'){
             const err = new Error('Hanya bisa role toko/vendor')
             err.statusCode = statusCode['400_bad_request']
@@ -47,6 +47,7 @@ exports.getAllRole = async (req, res, next) => {
                 telepon: dataRole.telepon,
                 wa_link: 'https://api.whatsapp.com/send?phone=62' + dataRole.telepon,
                 deskripsi: dataRole.deskripsi,
+                alamat: dataRole.alamat ,
                 jam_operasional: dataRole.jam_operasional
             }
             allData.push(data)
@@ -75,7 +76,7 @@ exports.detailInfo = async (req, res, next) => {
     try {
         //const user = await User.findById(req.params.id)
         const user = (await db.collection('users').doc(req.params.id).get()).data()
-        console.log(user)
+        //console.log(user)
         if(!user || user.role !== req.params.role || user.role === 'user'){
             const err = new Error('Error get data user!')
             err.statusCode = statusCode['404_not_found']
@@ -112,7 +113,7 @@ exports.detailInfo = async (req, res, next) => {
                 const dataBuah = {
                     id: doc.id,
                     name: buahData.name,
-                    harga: buahData.deskripsi,
+                    harga: parseInt(buahData.harga),
                     satuan: buahData.satuan
                 }
                 infoData.buah.push(dataBuah)
@@ -152,13 +153,13 @@ exports.detailBuah = async (req, res, next) => {
         }
 
         const buah = (await db.collection('buah').doc(idBuah).get()).data()
-        //console.log(idBuah)
-        //console.log(buah)
         if(!buah || buah.creator !== idToko) {
             const err = new Error('user not authorized')
             err.statusCode = statusCode['401_unauthorized']
             throw err
         }
+
+        buah.harga = parseInt(buah.harga)
 
         res.status(statusCode['200_ok']).json({
             errors: false,
@@ -207,6 +208,7 @@ exports.getInfo = async (req, res, next) => {
         res.status(statusCode['200_ok']).json({
             errors : false,
             data : {
+                id: req.userId,
                 email: user.email,
                 name: user.name,
                 alamat: user.alamat,
@@ -234,7 +236,6 @@ exports.getInfo = async (req, res, next) => {
 
 exports.changeInfo = async (req, res, next) => {
     try{
-        //await processFile(req, res)
 
         const errors = validationResult(req)
         if(!errors.isEmpty()){
@@ -244,16 +245,22 @@ exports.changeInfo = async (req, res, next) => {
             throw err
         }
 
-        //const user = await User.findById(req.userId)
         const user = (await db.collection('users').doc(req.userId).get()).data()
         if(!user){
             const err = new Error('Edit info gagal, token tidak valid!')
             err.statusCode = statusCode['401_unauthorized']
             throw err
         }
-        //console.log(req)
+
         const newName = req.body.name
-        const newAlamat = req.body.alamat
+        const newNegara = req.body.negara
+        const newKota = req.body.kota
+        const newDeskripsiAlamat = req.body.deskripsi_alamat
+        const newAlamat = {
+            negara: newNegara,
+            kota: newKota,
+            deskripsi_alamat: newDeskripsiAlamat
+        }
         let newTelp = req.body.telepon.toString()
         if(newTelp.startsWith('0')){
             newTelp = newTelp.slice(1)

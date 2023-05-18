@@ -46,6 +46,15 @@
  *                         type: string
  *                       deskripsi:
  *                         type: string
+ *                       alamat:
+ *                         type: object
+ *                         properties:
+ *                           negara:
+ *                             type: string
+ *                           kota:
+ *                             type: string
+ *                           deskripsi_alamat:
+ *                             type: string
  *                       jam_operasional:
  *                         type: string
  *       '401':
@@ -99,7 +108,14 @@
  *                     name:
  *                       type: string
  *                     alamat:
- *                       type: string
+ *                         type: object
+ *                         properties:
+ *                           negara:
+ *                             type: string
+ *                           kota:
+ *                             type: string
+ *                           deskripsi_alamat:
+ *                             type: string
  *                     telepon:
  *                       type: string
  *                     jam_operasional:
@@ -119,7 +135,7 @@
  *                           name:
  *                             type: string
  *                           harga:
- *                             type: string
+ *                             type: integer
  *                           satuan:
  *                             type: string
  *
@@ -178,7 +194,14 @@
  *                     telepon:
  *                       type: string
  *                     alamat:
- *                       type: string
+ *                         type: object
+ *                         properties:
+ *                           negara:
+ *                             type: string
+ *                           kota:
+ *                             type: string
+ *                           deskripsi_alamat:
+ *                             type: string
  *                     wa_link:
  *                       type: string
  *                     deskripsi:
