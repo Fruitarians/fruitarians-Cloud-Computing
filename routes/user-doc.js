@@ -65,20 +65,25 @@
  *     requestBody:
  *       required: true
  *       content:
- *         application/json:
+ *         multipart/form-data:
  *           schema:
  *             type: object
  *             properties:
  *               name:
  *                 type: string
+ *                 required: true
+ *                 description: nama minimal 4 karakter
  *               alamat:
  *                 type: string
+ *                 description: format bisa "Kota, Kecamatan, Deskripsi tambahan"
  *               telepon:
  *                 type: string
  *               deskripsi:
  *                 type: string
  *               jam_operasional:
  *                 type: string
+ *               file:
+ *                 type: file
  *
  *     responses:
  *       '200':

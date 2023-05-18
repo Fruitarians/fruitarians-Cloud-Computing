@@ -5,7 +5,7 @@
 
 const router = require('express').Router()
 
-const { body } =  require('express-validator')
+const processFile = require('../middleware/upload')
 
 const tokoController = require('../controllers/tokoController')
 const isAuth = require('../middleware/is-auth')
@@ -18,9 +18,11 @@ router.get('/buah/:idBuah', isAuth, tokoController.detailBuah)
 
 router.get('/buah',  isAuth, tokoController.getAllBuah)
 
-router.post('/buah', isAuth, tokoController.createBuah)
+// *? gunakan processFile
+router.post('/buah', processFile, isAuth, tokoController.createBuah)
 
-router.patch('/buah', isAuth, tokoController.editBuah)
+// *? gunakan processFile
+router.patch('/buah', processFile, isAuth, tokoController.editBuah)
 
 router.delete('/buah', isAuth, tokoController.deleteBuah)
 

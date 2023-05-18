@@ -9,7 +9,7 @@ router.get('/',  fileController.readFile)
 
 router.get('/:name',  fileController.donwloadFile)
 
-router.post('/upload',  fileController.uploadFile)
+router.post('/upload',  fileController.uploadFileOri)
 
 
 module.exports = router

@@ -110,6 +110,8 @@
  *                       type: string
  *                     jam_operasional:
  *                       type: string
+ *                     gambar_profil:
+ *                       type: string
  *                 buah:
  *                   type: array
  *                   items:
@@ -144,14 +146,14 @@
  * @swagger
  * /user/toko/buah/:
  *   post:
- *     summary: add new buah data *khusus role toko
+ *     summary: add new buah data (verif minimal input dilakukan di FE ya(?)) *khusus role toko
  *     tags: [Toko]
  *     security:
  *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
- *         application/json:
+ *         multipart/form-data:
  *           schema:
  *             type: object
  *             properties:
@@ -160,11 +162,12 @@
  *               harga:
  *                 type: integer
  *               satuan:
+ *                 type: string
  *                 example: kg
  *               deskripsi:
  *                 type: string
- *               gambar:
- *                 type: string
+ *               file:
+ *                 type: file
  *
  *     responses:
  *       '201':
@@ -178,6 +181,13 @@
  *                   example: false
  *                 message:
  *                   example: success create new buah
+ *                 picture:
+ *                   type: object
+ *                   properties:
+ *                     with_picture:
+ *                       type: boolean
+ *                     success_upload:
+ *                       type: boolean
  *                 data:
  *                   type: object
  *                   properties:
@@ -214,14 +224,14 @@
  * @swagger
  * /user/toko/buah/:
  *   patch:
- *     summary: edit buah data *khusus role toko
+ *     summary: edit buah data *khusus role toko (verif minimal input dilakukan di FE ya(?))
  *     tags: [Toko]
  *     security:
  *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
- *         application/json:
+ *         multipart/form-data:
  *           schema:
  *             type: object
  *             properties:
@@ -230,13 +240,14 @@
  *               name:
  *                 type: string
  *               harga:
- *                 type: ineteger
+ *                 type: integer
  *               satuan:
  *                 type: string
+ *                 example: kg
  *               deskripsi:
  *                 type: string
- *               gambar:
- *                 type: string
+ *               file:
+ *                 type: file
  *
  *     responses:
  *       '200':
@@ -248,6 +259,13 @@
  *               properties:
  *                 errors:
  *                   example: false
+ *                 picture:
+ *                   type: object
+ *                   properties:
+ *                     new_picture:
+ *                       type: boolean
+ *                     success_upload:
+ *                       type: boolean
  *                 new_buah_data:
  *                   type: object
  *                   properties:
@@ -310,6 +328,13 @@
  *                   example: false
  *                 message:
  *                   example: success delete buah data
+ *                 picture:
+ *                   type: object
+ *                   properties:
+ *                     has_picture:
+ *                       type: boolean
+ *                     success_delete_picture:
+ *                       type: boolean
  *                 data:
  *                   type: object
  *                   properties:

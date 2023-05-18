@@ -72,6 +72,7 @@ const swaggerSpecs = swaggerJSDoc(swaggerUIOptions)
 const app = express()
 
 app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors())
 
 app.use( helmet({
@@ -89,7 +90,7 @@ app.use(morganMonitor('combined', {stream : accessLogStream}))
 
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerSpecs))
 
-app.use(express.urlencoded({ extended: true }));
+
 app.use('/auth', authRoutes)
 app.use('/user/toko', tokoRoutes)
 app.use('/user', userRoutes)

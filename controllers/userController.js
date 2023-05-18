@@ -9,6 +9,9 @@ const mailjet = require('node-mailjet').apiConnect(process.env.MAILJET_API_KEY, 
 // firestore
 const db = require('../database/db')
 
+// * CONTROLLER UPLOAD PIC TO CLOUD STORAGE
+const fileController = require('./fileController')
+const processFile = require('../middleware/upload')
 
 //* -------------------------- update controller -------------------------- *//
 
@@ -88,7 +91,7 @@ exports.detailInfo = async (req, res, next) => {
             jam_operasional: user.jam_operasional,
             wa_link: 'https://api.whatsapp.com/send?phone=62' + user.telepon,
 
-            gambar_profil : 'link gambar profil detail'
+            gambar_profil : user.gambar_profil
         }
 
         if(user.role === 'toko'){
@@ -149,8 +152,8 @@ exports.detailBuah = async (req, res, next) => {
         }
 
         const buah = (await db.collection('buah').doc(idBuah).get()).data()
-        console.log(idBuah)
-        console.log(buah)
+        //console.log(idBuah)
+        //console.log(buah)
         if(!buah || buah.creator !== idToko) {
             const err = new Error('user not authorized')
             err.statusCode = statusCode['401_unauthorized']
@@ -159,7 +162,16 @@ exports.detailBuah = async (req, res, next) => {
 
         res.status(statusCode['200_ok']).json({
             errors: false,
-            data : {
+            toko: {
+                name: user.name,
+                telepon: user.telepon,
+                alamat: user.alamat,
+                wa_link: 'https://api.whatsapp.com/send?phone=62' + user.telepon,
+                deskripsi: user.deskripsi,
+                jam_operasional: user.jam_operasional,
+                gambar_profil: user.gambar_profil,
+            } ,
+            buah : {
                 idBuah: idBuah,
                 ...buah
             }
@@ -203,7 +215,7 @@ exports.getInfo = async (req, res, next) => {
                 deskripsi : user.deskripsi,
                 jam_operasional : user.jam_operasional,
 
-                gambar_profil: 'ketika role user akan template'
+                gambar_profil: user.gambar_profil
             }
         })
 
@@ -222,6 +234,8 @@ exports.getInfo = async (req, res, next) => {
 
 exports.changeInfo = async (req, res, next) => {
     try{
+        //await processFile(req, res)
+
         const errors = validationResult(req)
         if(!errors.isEmpty()){
             const err = new Error('Edit info gagal!')
@@ -237,7 +251,7 @@ exports.changeInfo = async (req, res, next) => {
             err.statusCode = statusCode['401_unauthorized']
             throw err
         }
-
+        //console.log(req)
         const newName = req.body.name
         const newAlamat = req.body.alamat
         let newTelp = req.body.telepon.toString()
@@ -257,10 +271,25 @@ exports.changeInfo = async (req, res, next) => {
             user.deskripsi = newDeskripsi
             user.jam_operasional = newJam
 
-            // * PROSES EDIT GAMBAR
-            // *! ATAU BUAT ENDPOINT GANTI GAMBAR SENDIRI
+            // * PROSES EDIT/ADD GAMBAR
+            if(req.file){
+                req.editData = {
+                    role : user.role,
+                    userId: req.userId
+                }
+                const uploadPic = await fileController.uploadFile(req)
 
-            user.gambar_profil = 'hasil perubahan'
+                if(uploadPic === false){
+                    const err = new Error('Edit failed, upload pic error!')
+                    err.statusCode = statusCode['400_bad_request']
+                    throw err
+                }
+
+                user.gambar_profil = uploadPic
+            }
+            // else {
+            //     console.log('gada file')
+            // }
         }
 
         //await user.save()

@@ -51,6 +51,7 @@ module.exports = async (req, res, next) => {
         }
 
         req.userId = decode_token.userId
+        //console.log('aman')
         next()
 
     } catch (e) {

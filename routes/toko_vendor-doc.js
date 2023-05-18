@@ -29,7 +29,7 @@
  *               properties:
  *                 errors:
  *                   example: false
- *                 toko:
+ *                 data:
  *                   type: array
  *                   items:
  *                     type: object
@@ -170,7 +170,24 @@
  *               properties:
  *                 errors:
  *                   example: false
- *                 data:
+ *                 toko:
+ *                   type: object
+ *                   properties:
+ *                     name:
+ *                       type: string
+ *                     telepon:
+ *                       type: string
+ *                     alamat:
+ *                       type: string
+ *                     wa_link:
+ *                       type: string
+ *                     deskripsi:
+ *                       type: string
+ *                     jam_operasional:
+ *                       type: string
+ *                     gambar_profil:
+ *                       type: string
+ *                 buah:
  *                   type: object
  *                   properties:
  *                     idBuah:

@@ -1,5 +1,7 @@
 const router = require('express').Router()
 
+// const { body } = require('express-validator')
+
 const { body } = require('express-validator')
 
 const userController = require('../controllers/userController')
@@ -7,6 +9,7 @@ const isAuth = require('../middleware/is-auth')
 
 const emailLimiter = require('../middleware/rate-limiter').emailReqLimiter
 
+const processFile = require('../middleware/upload')
 
 // * ------------------------------- route ------------------------------- * //
 
@@ -14,14 +17,16 @@ const emailLimiter = require('../middleware/rate-limiter').emailReqLimiter
 
 router.get('/info', isAuth, userController.getInfo)
 
-router.get('/:role', isAuth, userController.getAllRole) // doc di toko_vendor
+router.get('/:role', isAuth, userController.getAllRole) // *! doc di toko_vendor
 
-router.get('/:role/:id', isAuth, userController.detailInfo) // doc di toko_vendor
+router.get('/:role/:id', isAuth, userController.detailInfo) //*! doc di toko_vendor
 
-router.get('/toko/:idToko/:idBuah', isAuth, userController.detailBuah) // doc ada di toko_vendor
+router.get('/toko/:idToko/:idBuah', isAuth, userController.detailBuah) //*! doc ada di toko_vendor
 
 
-router.patch('/info',  [
+// *! ketika pakai data input form-data (ada upload IMG) -> gunakan processFile untuk process data gambar dan input
+// *? gunakan processFile
+router.patch('/info',  processFile, [
     body('name')
         //.isAlphanumeric().withMessage("Nama harus berupa huruf/string!")
         .isLength({min : 4}).withMessage('Nama minimal mengandung 4 karakter')

@@ -5,21 +5,12 @@ const { validationResult } = require('express-validator')
 
 // * firestore
 const db = require('../database/db')
-const {all} = require("express/lib/application");
 
-// * saran struktur buah
-// struktur_buah = {
-//     id,
-//     name,
-//     harga,
-//     deskripsi,
-//     gambar,
-//     satuan
-// }
+// * file controller for upload pic
+const fileController = require('./fileController')
 
 
 //* -------------------------- controller -------------------------- *//
-
 exports.detailBuah = async (req, res, next) => {
     try {
         const user = (await db.collection('users').doc(req.userId).get()).data()
@@ -50,7 +41,6 @@ exports.detailBuah = async (req, res, next) => {
             buah: buah
         })
 
-
     } catch (e) {
         if(!e.statusCode) {
             e.statusCode = statusCode['500_internal_server_error']
@@ -58,6 +48,8 @@ exports.detailBuah = async (req, res, next) => {
         next(e)
     }
 }
+
+
 
 
 
@@ -88,7 +80,8 @@ exports.getAllBuah = async (req, res, next) => {
                 wa_link: 'https://api.whatsapp.com/send?phone=62' + user.telepon,
                 alamat: user.alamat,
                 deskripsi: user.deskripsi,
-                jam_operasional: user.jam_operasional
+                jam_operasional: user.jam_operasional,
+                gambar_profil: user.gambar_profil
             },
             buah: dataBuah
         })
@@ -121,26 +114,53 @@ exports.createBuah = async (req, res, next) => {
         const harga = req.body.harga
         const satuan = req.body.satuan
         const deskripsi = req.body.deskripsi
-        const gambar = req.body.gambar
-
         const creator = req.userId
 
-        const buah = new Buah(name, harga, satuan, gambar, deskripsi, creator)
+        const buah = new Buah(name, harga, satuan, deskripsi, creator)
 
         const newBuah = {...buah}
         const addBuah = await db.collection('buah').add(newBuah)
         const idBuah = addBuah.id
-        console.log(idBuah)
+        //console.log(idBuah)
 
-        // * tambah ID ke Array user
+        const general_response = {
+            errors: false,
+            message: 'success create new buah',
+            picture: {
+                with_picture: false,
+                success_upload: false
+            }
+        }
+
+        // *? proses jika input gambar
+        if(req.file){
+            general_response.picture.with_picture = true
+            req.editData = {
+                role: 'toko',
+                userId: req.userId,
+                idBuah: idBuah
+            }
+
+            const uploadPic = await fileController.uploadFile(req)
+
+            if(uploadPic !== false){
+                //const err = new Error('')
+                newBuah.gambar = uploadPic
+                await db.collection('buah').doc(idBuah).update({
+                    gambar: uploadPic
+                })
+                general_response.picture.success_upload = true
+            }
+        }
+
+        // * tambah IDBuah ke Array user untuk data buah
         user.buah.push(idBuah)
         await db.collection('users').doc(req.userId).update({
             buah: user.buah
         })
 
         res.status(statusCode['201_created']).json({
-            errors: false,
-            message: 'success create new buah',
+            ...general_response,
             data: {
                 creator: {
                     id: req.userId,
@@ -186,19 +206,42 @@ exports.editBuah = async (req, res, next) => {
         const newHarga = req.body.harga
         const newSatuan = req.body.satuan
         const newDeskripsi = req.body.deskripsi
-        const newGambar = req.body.gambar
+        //const newGambar = req.body.gambar
 
         buahEdit.name = newName
         buahEdit.harga = newHarga
         buahEdit.satuan = newSatuan
         buahEdit.deskripsi = newDeskripsi
-        buahEdit.gambar = newGambar
 
+        const general_response = {
+            errors: false,
+            picture: {
+                new_picture: false,
+                success_upload: false
+            }
+        }
+
+        if(req.file){
+            general_response.picture.new_picture = true
+            req.editData = {
+                role: 'toko',
+                userId: req.userId,
+                idBuah: req.body.buahId
+            }
+
+            const editPic = await fileController.uploadFile(req)
+
+            if(editPic !== false){
+                buahEdit.gambar = editPic
+                general_response.picture.success_upload = true
+            }
+
+        }
 
         await db.collection('buah').doc(req.body.buahId).update(buahEdit)
 
         res.status(statusCode['200_ok']).json({
-            errors: false,
+            ...general_response,
             new_buah_data : {
                 creator: {
                     userId: req.userId,
@@ -243,14 +286,37 @@ exports.deleteBuah = async (req, res, next) => {
 
         await db.collection('buah').doc(req.body.buahId).delete()
 
+        const general_response = {
+            errors: false,
+            message: 'success delete buah data',
+            picture: {
+                has_picture: false,
+                success_delete_picture: false
+            }
+        }
+
+        // *! hapus gambar buah terkait jika punya nilai != null
+        if(buahHapus.gambar){
+            general_response.picture.has_picture = true
+            req.editData = {
+                role: 'toko',
+                userId: req.userId,
+                idBuah: req.body.buahId
+            }
+
+            const hapusGambar = await fileController.deleteItem(req)
+            if(hapusGambar) {
+                general_response.picture.success_delete_picture = true
+            }
+        }
+
         const deletedBuahId = user.buah.filter((value) => value !== req.body.buahId);
         await db.collection('users').doc(req.userId).update({
             buah: deletedBuahId
         })
 
         res.status(statusCode['200_ok']).json({
-            errors : false,
-            message: 'success delete buah data',
+            ...general_response,
             data: buahHapus
         })
 
