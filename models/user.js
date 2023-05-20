@@ -1,14 +1,14 @@
 class userSchema {
-    constructor(email, password, name, role, alamat, city, state, telepon){
+    constructor(email, password, name, role, alamat, telepon){
         this.email = email
         this.password = password
         this.name = name
         this.role = role
         this.alamat = alamat
-        this.city = city
-        this.state = state
         this.telepon = telepon
         this.gambar_profil = null
+        this.createdAt = new Date()
+        this.updatedAt = null
         this.token = {
             auth: null,
             forgetPass: null

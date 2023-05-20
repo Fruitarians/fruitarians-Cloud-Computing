@@ -29,6 +29,12 @@ exports.detailBuah = async (req, res, next) => {
 
         buah.harga = parseInt(buah.harga)
 
+
+        //*! format createdAt (kapan bergabung agar bisa di baca)
+        const date = new Date(user.createdAt._seconds * 1000); // Konversi detik ke milidetik
+        const dateFormatter = new Intl.DateTimeFormat('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+        const formattedDate = dateFormatter.format(date);
+
         res.status(statusCode['200_ok']).json({
             errors: false,
             toko: {
@@ -38,7 +44,9 @@ exports.detailBuah = async (req, res, next) => {
                 wa_link: 'https://api.whatsapp.com/send?phone=62' + user.telepon,
                 alamat: user.alamat,
                 deskripsi: user.deskripsi,
-                jam_operasional: user.jam_operasional
+                jam_operasional: user.jam_operasional,
+                bergabung: formattedDate,
+                gambar_profil: user.gambar_profil
             },
             buah: buah
         })
@@ -74,6 +82,21 @@ exports.getAllBuah = async (req, res, next) => {
             dataBuah.push(buahdata)
         })
 
+
+        // *? configure pagination
+        const totalData = dataBuah.length
+        const currentPage = parseInt(req.query.page) || 1
+        const perPage = parseInt(req.query.size) || 3
+        const startData = ((currentPage - 1) * perPage)
+        // *! ubah array agar sesuai page
+        dataBuah = dataBuah.slice(startData, startData + perPage)
+
+
+        //*! format createdAt (kapan bergabung agar bisa di baca)
+        const date = new Date(user.createdAt._seconds * 1000); // Konversi detik ke milidetik
+        const dateFormatter = new Intl.DateTimeFormat('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+        const formattedDate = dateFormatter.format(date);
+
         res.status(statusCode['200_ok']).json({
             errors: false,
             toko: {
@@ -85,8 +108,10 @@ exports.getAllBuah = async (req, res, next) => {
                 alamat: user.alamat,
                 deskripsi: user.deskripsi,
                 jam_operasional: user.jam_operasional,
+                bergabung: formattedDate,
                 gambar_profil: user.gambar_profil
             },
+            totalBuah: totalData ,
             buah: dataBuah
         })
 
@@ -159,6 +184,8 @@ exports.createBuah = async (req, res, next) => {
 
         // * tambah IDBuah ke Array user untuk data buah
         user.buah.push(idBuah)
+        //*! update user UpdatedAt -> menambahkan buah
+        user.updatedAt = new Date()
         await db.collection('users').doc(req.userId).update({
             buah: user.buah
         })
@@ -242,6 +269,7 @@ exports.editBuah = async (req, res, next) => {
 
         }
 
+        buahEdit.updatedAt = new Date()
         await db.collection('buah').doc(req.body.buahId).update(buahEdit)
 
         res.status(statusCode['200_ok']).json({
@@ -315,6 +343,8 @@ exports.deleteBuah = async (req, res, next) => {
         }
 
         const deletedBuahId = user.buah.filter((value) => value !== req.body.buahId);
+        //*! update user UpdatedaT -> menambahkan buah
+        user.updatedAt = new Date()
         await db.collection('users').doc(req.userId).update({
             buah: deletedBuahId
         })

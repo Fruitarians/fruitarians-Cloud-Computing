@@ -9,8 +9,9 @@ const swaggerUI = require('swagger-ui-express')
 const swaggerJSDoc = require('swagger-jsdoc')
 // * monitor & logging
 const expressStatusMonitor = require('express-status-monitor')
-const morganMonitor = require('morgan')
-const rotating_file_stream = require('rotating-file-stream')
+//*! morgan ngga dipake -> dipake error gabisa deploy app engine dan belum bisa atasinnya
+// const morganMonitor = require('morgan')
+// const rotating_file_stream = require('rotating-file-stream')
 // * global rate limiter
 const globalRateLimiter = require('./middleware/rate-limiter').globalLimiter
 
@@ -23,14 +24,15 @@ const authRoutes = require('./routes/auth')
 const userRoutes = require('./routes/user')
 const tokoRoutes = require('./routes/toko')
 const fileRoutes = require('./routes/file')
+const buahRoutes = require('./routes/buah')
 
 //* ------------------------------- app config ------------------------------- *//
 
-// * rotate logging config
-const accessLogStream = rotating_file_stream.createStream('access.log', {
-    interval : '1d',
-    path : path.join(__dirname, 'logs')
-})
+// *! rotate logging config (config seperti di bawah gabisa di[alao do App Eninge/ Cyclic)
+// const accessLogStream = rotating_file_stream.createStream('access.log', {
+//     interval : '1d',
+//     path : path.join(__dirname, 'logs')
+// })
 
 // * swagger config
 const swaggerUIOptions = {
@@ -64,7 +66,7 @@ const swaggerUIOptions = {
             }
         }
     },
-    apis: ['./routes/*.js']
+    apis: ['./swagger-js-doc/*.js']
 }
 const swaggerSpecs = swaggerJSDoc(swaggerUIOptions)
 
@@ -86,7 +88,8 @@ app.use( helmet({
 app.use(globalRateLimiter)
 
 app.use(expressStatusMonitor())
-app.use(morganMonitor('combined', {stream : accessLogStream}))
+// app.use(morganMonitor('combined', {stream : accessLogStream}))
+
 
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerSpecs))
 
@@ -95,6 +98,7 @@ app.use('/auth', authRoutes)
 app.use('/user/toko', tokoRoutes)
 app.use('/user', userRoutes)
 app.use('/file', fileRoutes)
+app.use('/buah', buahRoutes)
 
 //* global errorHandling
 app.use((error, req, res, next) => {

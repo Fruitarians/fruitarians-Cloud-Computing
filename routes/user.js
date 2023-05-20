@@ -5,6 +5,8 @@ const router = require('express').Router()
 const { body } = require('express-validator')
 
 const userController = require('../controllers/userController')
+const userRoleController = require('../controllers/userRoleController')
+
 const isAuth = require('../middleware/is-auth')
 
 const emailLimiter = require('../middleware/rate-limiter').emailReqLimiter
@@ -12,6 +14,27 @@ const emailLimiter = require('../middleware/rate-limiter').emailReqLimiter
 const processFile = require('../middleware/upload')
 
 // * ------------------------------- route ------------------------------- * //
+
+
+
+// *! ROUTES FOR user-exc doc Dokumentasi File
+
+/**
+ * ! catatan --------------------
+ * ! merupakan routes untuk endpoint role USER untuk kemampuan khusus dari role USER
+ * ! ---------------------------
+ */
+
+// *! BOOKMARK
+router.get('/bookmark', isAuth, userRoleController.getAllBookmark)
+
+router.post('/bookmark', isAuth, userRoleController.postBookmark)
+
+router.delete('/bookmark', isAuth, userRoleController.deleteBookmark)
+
+
+//*! --------------------------------------------------------------------------------------
+
 
 // * INFO
 
@@ -70,9 +93,10 @@ router.patch('/password', isAuth, [
 
 
 router.patch('/forget_password',[
-    body('email', "Masukan format email dengan benar!")
-        .isEmail()
-        .normalizeEmail(),
+    //*! revisi baru ngga pake email
+    // body('email', "Masukan format email dengan benar!")
+    //     .isEmail()
+    //     .normalizeEmail(),
     body('password', 'Password harus setidaknya mengandung 1 angka dan huruf Kapital dengan minimal sepanjang 6 karakter')
         .isStrongPassword({
             minLength : 6,
@@ -88,5 +112,7 @@ router.patch('/forget_password',[
             return true
         }),
 ], userController.changeForgetPassword )
+
+
 
 module.exports = router

@@ -31,7 +31,9 @@ exports.signup = async (req, res, next) => {
         const kota = req.body.kota
         const deskripsi_alamat = req.body.deskripsi_alamat
         const alamat = {
-            negara: negara, kota: kota, deskripsi_alamat : deskripsi_alamat
+            negara: negara,
+            kota: kota,
+            deskripsi_alamat : deskripsi_alamat
         }
         let telepon = req.body.telepon
 
@@ -46,19 +48,24 @@ exports.signup = async (req, res, next) => {
         const newUser = {...user}
 
         if (role !== 'user'){
-            const today = new Date();
-            const options = { day: 'numeric', month: 'long', year: 'numeric' };
-            const formattedDate = today.toLocaleDateString('id-ID', options);
-            const createdAt = formattedDate
+            // *! createdAt sudah otomatis dibuat oleh objek dan dibuat untuk semua role user dan sekalian juga akan ada field updatedAT
+            // const today = new Date();
+            // const options = { day: 'numeric', month: 'long', year: 'numeric' };
+            // const formattedDate = today.toLocaleDateString('id-ID', options);
+            // const createdAt = formattedDate
+            //
+            // newUser.createdAt = createdAt
 
-            newUser.createdAt = createdAt
             newUser.jam_operasional = null
             newUser.deskripsi = null
-            newUser.gambar_profil = null
+            // newUser.gambar_profil = null
 
             if(role === 'toko'){
                 newUser.buah = []
             }
+        } else{
+            //*! tambahan dengan adanya bookmark maka ketika dibuat akan buat array kosong
+            newUser.bookmark = []
         }
 
         //console.log(newUser)
@@ -66,10 +73,11 @@ exports.signup = async (req, res, next) => {
 
         res.status(statusCode['201_created']).json({
             errors: false,
-            message : "User Success Created",
-            user : {
-                email : newUser.email
-            }
+            message : "User Success Created"
+            //*? hilangkan data email ketika response
+            // , user : {
+            //     email : newUser.email
+            // }
         })
 
     } catch (e) {

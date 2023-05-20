@@ -6,6 +6,8 @@ class buahSchema {
         this.gambar = null
         this.deskripsi = deskripsi
         this.creator = creator
+        this.createdAt = new Date()
+        this.updatedAt = null
     }
 }
 

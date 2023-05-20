@@ -11,7 +11,6 @@ const db = require('../database/db')
 
 // * CONTROLLER UPLOAD PIC TO CLOUD STORAGE
 const fileController = require('./fileController')
-const processFile = require('../middleware/upload')
 
 //* -------------------------- update controller -------------------------- *//
 
@@ -40,6 +39,12 @@ exports.getAllRole = async (req, res, next) => {
         let allData = []
         data.forEach(doc => {
             dataRole = doc.data()
+
+            //*! format createdAt (kapan bergabung agar bisa di baca)
+            const date = new Date(dataRole.createdAt._seconds * 1000); // Konversi detik ke milidetik
+            const dateFormatter = new Intl.DateTimeFormat('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+            const formattedDate = dateFormatter.format(date);
+
             const data = {
                 id: doc.id,
                 name: dataRole.name,
@@ -48,13 +53,25 @@ exports.getAllRole = async (req, res, next) => {
                 wa_link: 'https://api.whatsapp.com/send?phone=62' + dataRole.telepon,
                 deskripsi: dataRole.deskripsi,
                 alamat: dataRole.alamat ,
+                bergabung: formattedDate,
                 jam_operasional: dataRole.jam_operasional
             }
             allData.push(data)
         })
 
+
+        // *? configure pagination
+        const totalData = allData.length
+        const currentPage = parseInt(req.query.page) || 1
+        const perPage = parseInt(req.query.size) || 3
+        const startData = ((currentPage - 1) * perPage)
+        // *! ubah array agar sesuai page
+        allData = allData.slice(startData, startData + perPage)
+
+
         res.status(statusCode['200_ok']).json({
             errors: false,
+            totalData: totalData,
             data : allData
         })
 
@@ -83,6 +100,11 @@ exports.detailInfo = async (req, res, next) => {
             throw err
         }
 
+        //*! format createdAt (kapan bergabung agar bisa di baca)
+        const date = new Date(user.createdAt._seconds * 1000); // Konversi detik ke milidetik
+        const dateFormatter = new Intl.DateTimeFormat('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+        const formattedDate = dateFormatter.format(date);
+
         const infoData = {
             id: req.params.id,
             name : user.name,
@@ -91,12 +113,12 @@ exports.detailInfo = async (req, res, next) => {
             deskripsi: user.deskripsi,
             jam_operasional: user.jam_operasional,
             wa_link: 'https://api.whatsapp.com/send?phone=62' + user.telepon,
-
+            bergabung: formattedDate,
             gambar_profil : user.gambar_profil
         }
 
         if(user.role === 'toko'){
-            //* BERISI TAMBAHAN INFO DATA UNTUK LIST BUAH
+            //*! BERISI TAMBAHAN INFO DATA UNTUK LIST BUAH
             infoData.buah = []
 
             const allData = await db.collection('buah').where('creator', '==', req.params.id).get()
@@ -119,6 +141,16 @@ exports.detailInfo = async (req, res, next) => {
                 infoData.buah.push(dataBuah)
             })
 
+           // console.log(infoData.buah)
+
+            // *? configure pagination
+            const totalData = allData.length
+            const currentPage = parseInt(req.query.page) || 1
+            const perPage = parseInt(req.query.size) || 3
+            const startData = ((currentPage - 1) * perPage)
+            // *! ubah array agar sesuai page
+            infoData.buah = infoData.buah.slice(startData, startData + perPage)
+
         }
 
         res.status(statusCode['200_ok']).json({
@@ -133,6 +165,7 @@ exports.detailInfo = async (req, res, next) => {
         next(e)
     }
 }
+
 
 
 
@@ -161,6 +194,11 @@ exports.detailBuah = async (req, res, next) => {
 
         buah.harga = parseInt(buah.harga)
 
+        //*! format createdAt (kapan bergabung agar bisa di baca)
+        const date = new Date(user.createdAt._seconds * 1000); // Konversi detik ke milidetik
+        const dateFormatter = new Intl.DateTimeFormat('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+        const formattedDate = dateFormatter.format(date);
+
         res.status(statusCode['200_ok']).json({
             errors: false,
             toko: {
@@ -170,6 +208,7 @@ exports.detailBuah = async (req, res, next) => {
                 wa_link: 'https://api.whatsapp.com/send?phone=62' + user.telepon,
                 deskripsi: user.deskripsi,
                 jam_operasional: user.jam_operasional,
+                bergabung: formattedDate,
                 gambar_profil: user.gambar_profil,
             } ,
             buah : {
@@ -205,6 +244,11 @@ exports.getInfo = async (req, res, next) => {
             // * KETIKA ROLE BUKAN user MAKA AMBIL FOTO PROFIL TOKO/VENDOR jika ada
         }
 
+        //*! format createdAt (kapan bergabung agar bisa di baca)
+        const date = new Date(user.createdAt._seconds * 1000); // Konversi detik ke milidetik
+        const dateFormatter = new Intl.DateTimeFormat('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+        const formattedDate = dateFormatter.format(date);
+
         res.status(statusCode['200_ok']).json({
             errors : false,
             data : {
@@ -216,7 +260,7 @@ exports.getInfo = async (req, res, next) => {
                 role: user.role,
                 deskripsi : user.deskripsi,
                 jam_operasional : user.jam_operasional,
-
+                bergabung: formattedDate,
                 gambar_profil: user.gambar_profil
             }
         })
@@ -299,7 +343,8 @@ exports.changeInfo = async (req, res, next) => {
             // }
         }
 
-        //await user.save()
+        //*! update user Updated
+        user.updatedAt = new Date()
         await db.collection('users').doc(req.userId).update(user)
 
         const new_data_response = {
@@ -373,7 +418,8 @@ exports.changePassword = async (req, res, next) => {
         const newPass = await bcrypt.hash(newPassword, 12)
 
         user.password = newPass
-        //await user.save()
+        //*! update user Updated
+        user.updatedAt = new Date()
         await db.collection('users').doc(req.userId).update(user)
 
         res.status(statusCode['200_ok']).json({
@@ -453,7 +499,8 @@ exports.getForgetPasswordToken = async (req, res, next) => {
             })
 
         user.token.forgetPass = token
-        //await user.save()
+        //*! update user Updated
+        user.updatedAt = new Date()
         await db.collection('users').doc(userId).update(user)
 
         res.status(statusCode['200_ok']).json({
@@ -495,7 +542,8 @@ exports.changeForgetPassword = async (req, res, next) => {
         }
 
         const password = req.body.password
-        const email = req.body.email
+        // *! ubahan baru tidak pakai email saat input
+        // const email = req.body.email
         const token = req.body.change_password_token
 
         const decoded_token = jwt.verify(token , process.env.JWT_SECRET)
@@ -516,9 +564,10 @@ exports.changeForgetPassword = async (req, res, next) => {
             userId = data.id
         }
 
-        if(user.email !== email){
-            failed_change_pass('Email dimasukan tidak sesuai dengan data token!')
-        }
+        // *! ubahan baru tidak pakai email saat input
+        // if(user.email !== email){
+        //     failed_change_pass('Email dimasukan tidak sesuai dengan data token!')
+        // }
 
 
         if(userId !== decoded_token.userId || user.email !== decoded_token.email || user.token.forgetPass !== decoded_token.token ){
@@ -534,7 +583,8 @@ exports.changeForgetPassword = async (req, res, next) => {
         user.password = newPassHash
         user.token.forgetPass = null
 
-        //await user.save()
+        //*! update user Updated
+        user.updatedAt = new Date()
         await db.collection('users').doc(userId).update(user)
 
         res.status(statusCode['200_ok']).json({
@@ -553,11 +603,3 @@ exports.changeForgetPassword = async (req, res, next) => {
         next(e)
     }
 }
-
-
-
-
-
-
-
-
