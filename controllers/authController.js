@@ -141,6 +141,7 @@ exports.login = async (req, res, next) => {
             errors: false,
             accessToken : accessToken,
             email : user.email,
+            name: user.name,
             token_type : 'Bearer'
         })
 

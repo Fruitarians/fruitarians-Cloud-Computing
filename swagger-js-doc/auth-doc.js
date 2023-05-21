@@ -91,6 +91,8 @@
  *                   example: Bearer
  *                 email:
  *                   type: string
+ *                 name:
+ *                   type: string
  *       '401':
  *         description: email/ Password Salah!
  *       '500':
