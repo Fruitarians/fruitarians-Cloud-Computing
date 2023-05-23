@@ -16,7 +16,7 @@ exports.signup = async (req, res, next) => {
     try {
         const errors = validationResult(req)
         if(!errors.isEmpty()){
-            const err = new Error('The Password Format is Incorrect / Email is Already in Sse.')
+            const err = new Error('The Password Format is Incorrect / Email is Already in Use.')
             err.statusCode = statusCode['401_unauthorized']
             throw err
         }
