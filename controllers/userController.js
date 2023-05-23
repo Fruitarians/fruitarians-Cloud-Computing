@@ -182,7 +182,7 @@ exports.detailBuah = async (req, res, next) => {
 
         const user = (await db.collection('users').doc(idToko).get()).data()
         if(!user || user.role !== 'toko' ) {
-            const err = new Error('user not authorized as')
+            const err = new Error('user not authorized')
             err.statusCode = statusCode['401_unauthorized']
             throw err
         }
@@ -278,16 +278,17 @@ exports.getInfo = async (req, res, next) => {
 exports.changeInfo = async (req, res, next) => {
     try{
 
-        const errors = validationResult(req)
-        if(!errors.isEmpty()){
-            const err = new Error('Edit info gagal!')
-            err.statusCode = statusCode['401_unauthorized']
-            throw err
-        }
+        // *! verifikasi dihilangkan
+        // const errors = validationResult(req)
+        // if(!errors.isEmpty()){
+        //     const err = new Error('Edit info gagal!')
+        //     err.statusCode = statusCode['401_unauthorized']
+        //     throw err
+        // }
 
         const user = (await db.collection('users').doc(req.userId).get()).data()
         if(!user){
-            const err = new Error('Edit info gagal, token tidak valid!')
+            const err = new Error('Edit info gagal, user tidak valid!')
             err.statusCode = statusCode['401_unauthorized']
             throw err
         }
@@ -435,13 +436,14 @@ exports.changePassword = async (req, res, next) => {
 
 exports.getForgetPasswordToken = async (req, res, next) => {
     try {
-        const errors = validationResult(req)
-        if(!errors.isEmpty()) {
-            const err = new Error('Get Forget Token Failed!')
-            err.statusCode = statusCode['401_unauthorized']
-            err.data = errors.array()
-            throw err
-        }
+        //*! verifikasi di hilangkan
+        // const errors = validationResult(req)
+        // if(!errors.isEmpty()) {
+        //     const err = new Error('Get Forget Token Failed!')
+        //     err.statusCode = statusCode['401_unauthorized']
+        //     err.data = errors.array()
+        //     throw err
+        // }
 
         //const user = await User.findOne({ email : req.body.email })
         // * karena pakai email maka pencarian user juga pakai filter

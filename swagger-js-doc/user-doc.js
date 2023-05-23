@@ -58,8 +58,27 @@
  *
  *       '401':
  *         description: not authorized
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 errors:
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: Get Info Failed
  *       '500':
  *         description: internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 errors:
+ *                   example: true
+ *                 message:
+ *                   type: string
  */
 
 
@@ -139,10 +158,39 @@
  *
  *       '400':
  *         description: error upload pic
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 errors:
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: Edit failed, upload pic error!
  *       '401':
  *         description: not authorized
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 errors:
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: Edit info gagal, user tidak valid!
  *       '500':
  *         description: internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 errors:
+ *                   example: true
+ *                 message:
+ *                   type: string
  */
 
 
@@ -188,8 +236,26 @@
  *                   example: User success change password
  *       '401':
  *         description: gagal autentikasi dan ganti password gagal
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 errors:
+ *                   example: true
+ *                 message:
+ *                   type: string
  *       '500':
  *         description: internal error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 errors:
+ *                   example: true
+ *                 message:
+ *                   type: string
  *
  */
 
@@ -240,8 +306,27 @@
  *
  *       '401':
  *         description: auth email failed, failed get token
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 errors:
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: Failed get token, User not found!
  *       '500':
  *         description: internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 errors:
+ *                   example: true
+ *                 message:
+ *                   type: string
  *
  */
 
@@ -292,10 +377,26 @@
  *                           type: string
  *       '401':
  *         description: token not valid
- *       '406':
- *         description: input password not valid
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 errors:
+ *                   example: true
+ *                 message:
+ *                   type: string
  *       '500':
  *         description: internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 errors:
+ *                   example: true
+ *                 message:
+ *                   type: string
  *
  */
 

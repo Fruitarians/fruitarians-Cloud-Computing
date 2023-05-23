@@ -100,8 +100,26 @@
  *                       type: string
  *       '401':
  *         description: email/ Password Salah!
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 errors:
+ *                   example: true
+ *                 message:
+ *                   example: email / password salah
  *       '500':
  *         description: Internal Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 errors:
+ *                   example: true
+ *                 message:
+ *                   type: string
  *
  */
 
@@ -165,8 +183,26 @@
  *
  *       '422':
  *         description: gagal, data input tidak sesuai
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 errors:
+ *                   example: true
+ *                 message:
+ *                   exampple: SignUp Gagal, Data tidak sesuai, pastikan password di set harus menggunakan minimal 1 angka dan 1 huruf kapital dengan minimal 6 karakter atau email sudah digunakan
  *       '500':
  *         description: internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 errors:
+ *                   example: true
+ *                 message:
+ *                   type: string
  */
 
 
@@ -198,8 +234,26 @@
  *
  *       '401':
  *         description: Auth Error, failed logout
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 errors:
+ *                   example: true
+ *                 message:
+ *                   example: Auth Error, failed logout!
  *       '500':
  *         description: internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 errors:
+ *                   example: true
+ *                 message:
+ *                   type: string
  *
  */
 
