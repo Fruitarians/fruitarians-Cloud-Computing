@@ -16,7 +16,7 @@ exports.signup = async (req, res, next) => {
     try {
         const errors = validationResult(req)
         if(!errors.isEmpty()){
-            const err = new Error('SignUp Gagal, Data tidak sesuai, pastikan password di set harus menggunakan minimal 1 angka dan 1 huruf kapital dengan minimal 6 karakter atau email sudah digunakan')
+            const err = new Error('The Password Format is Incorrect / Email is Already in Sse.')
             err.statusCode = statusCode['401_unauthorized']
             throw err
         }
@@ -84,7 +84,7 @@ exports.login = async (req, res, next) => {
     const password = req.body.password
 
     function login_failed(){
-        const err = new Error('email / password salah!')
+        const err = new Error('Wrong Email / Password!')
         err.statusCode = statusCode['401_unauthorized']
         throw err
     }
@@ -92,7 +92,7 @@ exports.login = async (req, res, next) => {
     try {
         const errors = validationResult(req)
         if(!errors.isEmpty()){
-            const err = new Error('email/ password salah!')
+            const err = new Error('Wrong Email / Password!')
             err.statusCode = statusCode['401_unauthorized']
             err.data = errors.array()
             throw err
@@ -151,7 +151,7 @@ exports.logout = async (req, res, next) => {
     try {
         let user = (await db.collection('users').doc(req.userId).get()).data()
         if(!user){
-            const err = new Error('Auth Error, failed logout')
+            const err = new Error('Auth Error, Failed Logout')
             err.statusCode = statusCode['401_unauthorized']
             throw err
         }
@@ -161,7 +161,7 @@ exports.logout = async (req, res, next) => {
 
         res.status(statusCode['200_ok']).json({
             errors : false,
-            message : 'log out'
+            message : 'Log Out Success!'
         })
 
     } catch(e) {

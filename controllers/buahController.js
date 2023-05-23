@@ -17,7 +17,7 @@ exports.getAllBuah = async (req, res, next) => {
     try{
         const user = (await db.collection('users').doc(req.userId).get()).data()
         if(!user) {
-            const err = new Error('not authorized user')
+            const err = new Error('User Not Authorized')
             err.statusCode = statusCode['401_unauthorized']
             throw err
         }

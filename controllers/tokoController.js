@@ -15,14 +15,14 @@ exports.detailBuah = async (req, res, next) => {
     try {
         const user = (await db.collection('users').doc(req.userId).get()).data()
         if(!user || user.role !== 'toko'){
-            const err = new Error('not Authorized user')
+            const err = new Error('Not Authorized User')
             err.statusCode = statusCode['401_unauthorized']
             throw err
         }
 
         const buah = (await db.collection('buah').doc(req.params.idBuah).get()).data()
         if(!buah || buah.creator !== req.userId){
-            const err = new Error('not Authorized user')
+            const err = new Error('Not Authorized User')
             err.statusCode = statusCode['401_unauthorized']
             throw err
         }
@@ -68,7 +68,7 @@ exports.getAllBuah = async (req, res, next) => {
     try {
         const user = (await db.collection('users').doc(req.userId).get()).data()
         if(!user || user.role !== 'toko' ) {
-            const err = new Error('not Authorized user')
+            const err = new Error('Not Authorized User')
             err.statusCode = statusCode['401_unauthorized']
             throw err
         }
@@ -134,7 +134,7 @@ exports.createBuah = async (req, res, next) => {
         const user = (await db.collection('users').doc(req.userId).get()).data()
 
         if(!user || user.role !== 'toko'){
-            const err = new Error('Not authorized user')
+            const err = new Error('Not Authorized User')
             err.statusCode = statusCode['401_unauthorized']
             throw err
         }
@@ -154,7 +154,7 @@ exports.createBuah = async (req, res, next) => {
 
         const general_response = {
             errors: false,
-            message: 'success create new buah',
+            message: 'Success Create New Buah',
             picture: {
                 with_picture: false,
                 success_upload: false
@@ -221,14 +221,14 @@ exports.editBuah = async (req, res, next) => {
         const user = (await db.collection('users').doc(req.userId).get()).data()
 
         if(!user || user.role !== 'toko'){
-            const err = new Error('Not authorized user')
+            const err = new Error('Not Authorized User')
             err.statusCode = statusCode['401_unauthorized']
             throw err
         }
 
         const buahEdit = (await db.collection('buah').doc(req.body.buahId).get()).data()
         if(!buahEdit || buahEdit.creator.toString() !== req.userId){
-            const err = new Error('Not authorized user')
+            const err = new Error('Not Authorized User')
             err.statusCode = statusCode['401_unauthorized']
             throw err
         }
@@ -303,7 +303,7 @@ exports.deleteBuah = async (req, res, next) => {
     try {
         const user = (await db.collection('users').doc(req.userId).get()).data()
         if(!user || user.role !== 'toko'){
-            const err = new Error('Not authorized user')
+            const err = new Error('Not Authorized User')
             err.statusCode = statusCode['401']
             throw err
         }
@@ -311,7 +311,7 @@ exports.deleteBuah = async (req, res, next) => {
 
         const buahHapus = (await db.collection('buah').doc(req.body.buahId).get()).data()
         if(!buahHapus || buahHapus.creator.toString() !== req.userId){
-            const err = new Error('Not authorized user')
+            const err = new Error('Not Authorized User')
             err.statusCode = statusCode['401']
             throw err
         }
@@ -320,7 +320,7 @@ exports.deleteBuah = async (req, res, next) => {
 
         const general_response = {
             errors: false,
-            message: 'success delete buah data',
+            message: 'Success Delete Buah Data',
             picture: {
                 has_picture: false,
                 success_delete_picture: false

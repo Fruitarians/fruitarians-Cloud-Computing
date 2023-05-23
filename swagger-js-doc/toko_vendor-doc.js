@@ -79,7 +79,7 @@
  *                   example: true
  *                 message:
  *                   type: string
- *                   example: Hanya bisa role toko/vendor
+ *                   example: Parameter Path Value Must Be toko/vendor
  *       '500':
  *         description: internal server error
  *         content:
@@ -192,7 +192,7 @@
  *                   example: true
  *                 message:
  *                   type: string
- *                   example: Error get data user!
+ *                   example: Error Get Data User!
  *       '500':
  *         description: internal server error
  *         content:
@@ -289,7 +289,7 @@
  *                     creator:
  *                       type: string
  *       '401':
- *         description: not authorized
+ *         description: User Not Authorized
  *         content:
  *           application/json:
  *             schema:
@@ -299,7 +299,7 @@
  *                   example: true
  *                 message:
  *                   type: string
- *                   example: user not authorized
+ *                   example: User Not Authorized
  *       '500':
  *         description: internal server error
  *         content:
@@ -364,7 +364,7 @@
  *                       creator:
  *                         type: string
  *       '401':
- *         description: Not Authorized
+ *         description: User Not Authorized
  *         content:
  *           application/json:
  *             schema:
@@ -374,7 +374,7 @@
  *                   example: true
  *                 message:
  *                   type: string
- *                   example: not authorized user
+ *                   example: User Not Authorized
  *       '500':
  *         description: Internal Server Error
  *         content:

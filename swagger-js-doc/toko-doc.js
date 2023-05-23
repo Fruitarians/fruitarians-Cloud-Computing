@@ -67,7 +67,7 @@
  *                     satuan:
  *                       type: string
  *       '401':
- *         description: not Authorized
+ *         description: Not Authorized User
  *         content:
  *           application/json:
  *             schema:
@@ -76,7 +76,7 @@
  *                 errors:
  *                   example: true
  *                 message:
- *                   example: not Authorized user
+ *                   example: Not Authorized User
  *       '500':
  *         description: internal server error
  *         content:
@@ -173,7 +173,7 @@
  *                       satuan:
  *                         type: string
  *       '401':
- *         description: not Authorized
+ *         description: Not Authorized User
  *         content:
  *           application/json:
  *             schema:
@@ -182,7 +182,7 @@
  *                 errors:
  *                   example: true
  *                 message:
- *                   example: not Authorized user
+ *                   example: Not Authorized User
  *       '500':
  *         description: internal server error
  *         content:
@@ -241,7 +241,7 @@
  *                 errors:
  *                   example: false
  *                 message:
- *                   example: success create new buah
+ *                   example: Success Create New Buah
  *                 picture:
  *                   type: object
  *                   properties:
@@ -270,7 +270,7 @@
  *                     gambar:
  *                       type: string
  *       '401':
- *         description: not Authorized
+ *         description: Not Authorized User
  *         content:
  *           application/json:
  *             schema:
@@ -279,7 +279,7 @@
  *                 errors:
  *                   example: true
  *                 message:
- *                   example: not Authorized user
+ *                   example: Not Authorized User
  *       '500':
  *         description: internal server error
  *         content:
@@ -367,7 +367,7 @@
  *                       type: string
  *
  *       '401':
- *         description: not Authorized
+ *         description: Not Authorized User
  *         content:
  *           application/json:
  *             schema:
@@ -376,7 +376,7 @@
  *                 errors:
  *                   example: true
  *                 message:
- *                   example: not Authorized user
+ *                   example: Not Authorized User
  *       '500':
  *         description: internal server error
  *         content:
@@ -424,7 +424,7 @@
  *                 errors:
  *                   example: false
  *                 message:
- *                   example: success delete buah data
+ *                   example: Success Delete Buah Data
  *                 picture:
  *                   type: object
  *                   properties:
@@ -449,7 +449,7 @@
  *                             type: string
  *
  *       '401':
- *         description: not Authorized
+ *         description: Not Authorized User
  *         content:
  *           application/json:
  *             schema:
@@ -458,7 +458,7 @@
  *                 errors:
  *                   example: true
  *                 message:
- *                   example: Not authorized user
+ *                   example: Not Authorized User
  *       '500':
  *         description: internal server error
  *         content:

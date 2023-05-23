@@ -24,6 +24,8 @@
  *               properties:
  *                 errors:
  *                   example: false
+ *                 message:
+ *                   example: Success Get User Info
  *                 data:
  *                   type: object
  *                   properties:
@@ -132,7 +134,7 @@
  *                 errors:
  *                   example: false
  *                 message:
- *                   example: success edit data user
+ *                   example: Success Edit Data User
  *                 data:
  *                   type: object
  *                   properties:
@@ -167,7 +169,7 @@
  *                   example: true
  *                 message:
  *                   type: string
- *                   example: Edit failed, upload pic error!
+ *                   example: Edit Failed, Upload Pic Error!
  *       '401':
  *         description: not authorized
  *         content:
@@ -179,7 +181,7 @@
  *                   example: true
  *                 message:
  *                   type: string
- *                   example: Edit info gagal, user tidak valid!
+ *                   example: Edit Info Failed, User Not Valid!
  *       '500':
  *         description: internal server error
  *         content:
@@ -233,7 +235,7 @@
  *                 errors:
  *                   example: false
  *                 message:
- *                   example: User success change password
+ *                   example: User Success Change Password
  *       '401':
  *         description: gagal autentikasi dan ganti password gagal
  *         content:
@@ -290,7 +292,7 @@
  *                 errors:
  *                   example: false
  *                 message:
- *                   example: Success send token to email
+ *                   example: Success Send Token to Email
  *                 data:
  *                   type: object
  *                   properties:
@@ -315,7 +317,7 @@
  *                   example: true
  *                 message:
  *                   type: string
- *                   example: Failed get token, User not found!
+ *                   example: Failed Get Token, User Not Found!
  *       '500':
  *         description: internal server error
  *         content:
@@ -364,7 +366,7 @@
  *                 errors:
  *                   example: false
  *                 message:
- *                   example: Success change password from forget password
+ *                   example: Success Change Password from Forget Password Feature
  *                 data:
  *                   type: object
  *                   properties:

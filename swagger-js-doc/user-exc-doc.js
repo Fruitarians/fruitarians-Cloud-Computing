@@ -72,7 +72,7 @@
  *                   example: true
  *                 message:
  *                   type: string
- *                   example: Not Authorized
+ *                   example: Not Authorized Access
  *       '500':
  *         description: Internal Server Error
  *         content:
@@ -121,7 +121,7 @@
  *                 errors:
  *                   example: false
  *                 message:
- *                   example: success add data to bookmark
+ *                   example: Success Add Data to Bookmark
  *       '401':
  *         description: Not Authorized
  *         content:
@@ -133,7 +133,7 @@
  *                   example: true
  *                 message:
  *                   type: string
- *                   example: Not Authorized
+ *                   example: Not Authorized Access
  *       '500':
  *         description: Internal Server Error
  *         content:
@@ -183,7 +183,7 @@
  *                 errors:
  *                   example: false
  *                 message:
- *                   example: success delete the bookmarked id
+ *                   example: Success Delete the Bookmarked Data
  *       '401':
  *         description: Not Authorized
  *         content:
@@ -195,7 +195,7 @@
  *                   example: true
  *                 message:
  *                   type: string
- *                   example: Not Authorized
+ *                   example: Not Authorized Access
  *       '500':
  *         description: Internal Server Error
  *         content:

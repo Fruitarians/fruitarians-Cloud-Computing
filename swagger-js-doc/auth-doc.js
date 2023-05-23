@@ -108,7 +108,7 @@
  *                 errors:
  *                   example: true
  *                 message:
- *                   example: email / password salah
+ *                   example: Wrong Email / Password!
  *       '500':
  *         description: Internal Error
  *         content:
@@ -230,7 +230,7 @@
  *                 errors:
  *                   example: false
  *                 message:
- *                   example: log out
+ *                   example: Log Out Success!
  *
  *       '401':
  *         description: Auth Error, failed logout
@@ -242,7 +242,7 @@
  *                 errors:
  *                   example: true
  *                 message:
- *                   example: Auth Error, failed logout!
+ *                   example: Auth Error, Failed Logout!
  *       '500':
  *         description: internal server error
  *         content:

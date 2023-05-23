@@ -24,7 +24,7 @@ exports.getAllRole = async (req, res, next) => {
         const role = req.params.role // role hanya terima vendor/ toko
         // console.log(role)
         if( role !== 'toko' && role !== 'vendor'){
-            const err = new Error('Hanya bisa role toko/vendor')
+            const err = new Error('Parameter Path Value Must Be toko/vendor')
             err.statusCode = statusCode['400_bad_request']
             throw err
         }
@@ -33,7 +33,7 @@ exports.getAllRole = async (req, res, next) => {
         if(data.empty){
             res.status(statusCode['200_ok']).json({
                 errors: false,
-                message: 'Data TIdak Ditemukan',
+                message: 'Data Not Found',
                 data: []
             })
         }
@@ -97,7 +97,7 @@ exports.detailInfo = async (req, res, next) => {
         const user = (await db.collection('users').doc(req.params.id).get()).data()
         //console.log(user)
         if(!user || user.role !== req.params.role || user.role === 'user'){
-            const err = new Error('Error get data user!')
+            const err = new Error('Error Get Data User!')
             err.statusCode = statusCode['404_not_found']
             throw err
         }
@@ -127,7 +127,7 @@ exports.detailInfo = async (req, res, next) => {
             if(allData.empty){
                 res.status(statusCode['200_ok']).json({
                     errors: false,
-                    message: 'data buah kosong',
+                    message: 'Data Buah Kosong',
                     data: infoData
                 })
             }
@@ -182,7 +182,7 @@ exports.detailBuah = async (req, res, next) => {
 
         const user = (await db.collection('users').doc(idToko).get()).data()
         if(!user || user.role !== 'toko' ) {
-            const err = new Error('user not authorized')
+            const err = new Error('User Not Authorized')
             err.statusCode = statusCode['401_unauthorized']
             throw err
         }
@@ -248,7 +248,7 @@ exports.getInfo = async (req, res, next) => {
 
         res.status(statusCode['200_ok']).json({
             errors : false,
-            message: 'success get user info',
+            message: 'Success Get User Info',
             data : {
                 id: req.userId,
                 email: user.email,
@@ -288,7 +288,7 @@ exports.changeInfo = async (req, res, next) => {
 
         const user = (await db.collection('users').doc(req.userId).get()).data()
         if(!user){
-            const err = new Error('Edit info gagal, user tidak valid!')
+            const err = new Error('Edit Info Failed, User Not Valid!')
             err.statusCode = statusCode['401_unauthorized']
             throw err
         }
@@ -328,7 +328,7 @@ exports.changeInfo = async (req, res, next) => {
                 const uploadPic = await fileController.uploadFile(req)
 
                 if(uploadPic === false){
-                    const err = new Error('Edit failed, upload pic error!')
+                    const err = new Error('Edit Failed, Upload Pic Error!')
                     err.statusCode = statusCode['400_bad_request']
                     throw err
                 }
@@ -358,7 +358,7 @@ exports.changeInfo = async (req, res, next) => {
 
         res.status(statusCode['200_ok']).json({
             errors : false,
-            message: 'success edit data user',
+            message: 'Success Edit Data User',
             data : new_data_response
         })
 
@@ -396,12 +396,12 @@ exports.changePassword = async (req, res, next) => {
         //const user = await User.findById(req.userId)
         const user = (await db.collection('users').doc(req.userId).get()).data()
         if (!user) {
-            failed_change_pass('Auth Error, Failed change password')
+            failed_change_pass('Auth Account Error, Failed change password')
         }
 
         const oldPassEqual = await bcrypt.compare(oldPassword, user.password)
         if(!oldPassEqual) {
-            failed_change_pass('Password lama tidak sesuai dengan akun anda! ganti password gagal!')
+            failed_change_pass('The Old Password Doesnt Match Your Account! Failed to Change Password!')
         }
 
         //*! user bisa set password baru sama dengan password lama
@@ -419,7 +419,7 @@ exports.changePassword = async (req, res, next) => {
 
         res.status(statusCode['200_ok']).json({
             errors: false,
-            message: 'User success change password'
+            message: 'User Success Change Password'
         })
 
     } catch (e) {
@@ -451,7 +451,7 @@ exports.getForgetPasswordToken = async (req, res, next) => {
         let user
         let userId
         if(data.empty) {
-            const err = new Error('Failed get token, User not found!')
+            const err = new Error('Failed Get Token, User Not Found!')
             err.statusCode = statusCode['401_unauthorized']
             throw err
         } else {
@@ -475,7 +475,7 @@ exports.getForgetPasswordToken = async (req, res, next) => {
                     {
                         "From" : {
                             "Email" : process.env.FROM_EMAIL,
-                            "Name" : "Spotify Clone API"
+                            "Name" : "Fruitarians"
                         },
                         "To" : [
                             {
@@ -498,7 +498,7 @@ exports.getForgetPasswordToken = async (req, res, next) => {
 
         res.status(statusCode['200_ok']).json({
             errors: false,
-            message: 'Success send token to email',
+            message: 'Success Send Token to Email',
             data: {
                 token: forgetPassToken,
                 user: {
@@ -541,7 +541,7 @@ exports.changeForgetPassword = async (req, res, next) => {
 
         const decoded_token = jwt.verify(token , process.env.JWT_SECRET)
         if(!decoded_token){
-            failed_change_pass('Token tidak valid!')
+            failed_change_pass('The Token is not Valid!')
         }
 
 
@@ -550,7 +550,7 @@ exports.changeForgetPassword = async (req, res, next) => {
         let user
         let userId
         if(data.empty) {
-            failed_change_pass('Token tidak valid!')
+            failed_change_pass('The Token is not Valid!')
         } else {
             data = data.docs[0]
             user = data.data()
@@ -559,7 +559,7 @@ exports.changeForgetPassword = async (req, res, next) => {
 
 
         if(userId !== decoded_token.userId || user.email !== decoded_token.email || user.token.forgetPass !== decoded_token.token ){
-            failed_change_pass('Token tidak valid!')
+            failed_change_pass('The Token is not Valid!')
         }
 
         //*! User bisa ganti password baru sama dengan password lama
@@ -578,7 +578,7 @@ exports.changeForgetPassword = async (req, res, next) => {
 
         res.status(statusCode['200_ok']).json({
             errors: false,
-            message: "Success change password from forget password",
+            message: "Success Change Password from Forget Password Feature",
             data: {
                 email: user.email,
                 id: userId

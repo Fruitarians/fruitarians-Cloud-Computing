@@ -17,7 +17,7 @@ exports.getAllBookmark = async (req, res, next) => {
     try{
         const user = (await db.collection('users').doc(req.userId).get()).data()
         if(!user || user.role !== 'user'){
-            const err = new Error('Not Authorized')
+            const err = new Error('Not Authorized Access')
             err.statusCode = statusCode['401_unauthorized']
             throw err
         }
@@ -72,7 +72,7 @@ exports.postBookmark = async (req, res, next) => {
     try{
         const user = (await db.collection('users').doc(req.userId).get()).data()
         if(!user || user.role !== 'user'){
-            const err = new Error('Not Authorized')
+            const err = new Error('Not Authorized Access')
             err.statusCode = statusCode['401_unauthorized']
             throw err
         }
@@ -82,7 +82,7 @@ exports.postBookmark = async (req, res, next) => {
         const userBookmarked = (await db.collection('users').doc(id).get()).data()
         // *! verif filter bahwa misal yang BISA DIMASUKAN bookmark HANYA user ROLE TOKO SAJA
         if(!userBookmarked || userBookmarked.role !== 'toko'){
-            const err = new Error('User ingin dibookmark tidak valid!')
+            const err = new Error('Not Authorized Access')
             err.statusCode = statusCode['401_unauthorized']
             throw err
         }
@@ -90,7 +90,7 @@ exports.postBookmark = async (req, res, next) => {
         //*! general response config
         general_response = {
             errors: false,
-            message: 'data sudah ada di bookmark',
+            message: 'The Data is Already Bookmarked.',
             bookmarked_user_id: id
         }
 
@@ -100,7 +100,7 @@ exports.postBookmark = async (req, res, next) => {
                 bookmark: user.bookmark
             })
 
-            general_response.message = 'success add id to bookmark'
+            general_response.message = 'Success Add Data to Bookmark'
         }
 
         res.status(statusCode['200_ok']).json({
@@ -123,7 +123,7 @@ exports.deleteBookmark = async (req, res, next) => {
     try{
         const user = (await db.collection('users').doc(req.userId).get()).data()
         if(!user || user.role !== 'user'){
-            const err = new Error('Not Authorized')
+            const err = new Error('Not Authorized Access')
             err.statusCode = statusCode['401_unauthorized']
             throw err
         }
@@ -131,7 +131,7 @@ exports.deleteBookmark = async (req, res, next) => {
         const id = req.body.delete_bookmark_userId //*! id bookmark yang ingin dihapus
 
         //*? response message
-        let message = 'id bookmark not found on user data'
+        let message = 'Data Bookmark Not Found On User Data'
 
         if(user.bookmark.includes(id)){
             const deletedArrayBookmark = user.bookmark.filter(value => value !== id)
@@ -139,7 +139,7 @@ exports.deleteBookmark = async (req, res, next) => {
             await db.collection('users').doc(req.userId).update({
                 bookmark: deletedArrayBookmark
             })
-            message = 'success delete the bookmarked id'
+            message = 'Success Delete the Bookmarked Data'
         }
 
         res.status(statusCode['200_ok']).json({
