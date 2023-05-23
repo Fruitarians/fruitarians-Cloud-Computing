@@ -14,13 +14,11 @@ const db = require('../database/db')
 // * ------------------------------- route ------------------------------- * //
 
 // * GET
-
 router.get('/', (req, res, next) => {
     res.status(200).json({
         message : "Success Connect"
     })
 })
-
 
 
 router.get('/user', isAuth, async (req, res, next) => {
@@ -29,7 +27,7 @@ router.get('/user', isAuth, async (req, res, next) => {
         res.status(200).json({
             errors:false,
             message : 'User LogIn',
-            user: {
+            data: {
                 id: req.userId,
                 name: user.name,
                 role: user.role
@@ -45,23 +43,24 @@ router.get('/user', isAuth, async (req, res, next) => {
 
 
 
-
+// * ------------------------------- FITUR UTAMA ------------------------------- * //
 
 // * POST
-router.post('/login', [
-    body('email', 'Gunakan format email yang sesuai!')
-        .isEmail()
-        .normalizeEmail()
-], loginReqLimiter, localLimiter, authController.login)
+router.post('/login'
+    // , [
+    // body('email', 'Gunakan format email yang sesuai!')
+    //     .isEmail()
+    //     .normalizeEmail()]
+    , loginReqLimiter, localLimiter, authController.login)
 
 
 
 
 
 router.post('/signup',[
-    body('email', 'Gunakan format email yang sesuai!')
-        .isEmail()
-        .normalizeEmail()
+    body('email')
+        // .isEmail()
+        // .normalizeEmail()
         .custom((value, {req}) => {
             return (async () => {
                 const user = await db.collection('users').where('email', '==', value).limit(1).get()
@@ -70,27 +69,28 @@ router.post('/signup',[
                 }
             })()
         }),
-    body('password', 'Password harus setidaknya mengandung 1 angka dan huruf Kapital dengan minimal sepanjang 6 karakter')
+    body('password')
         .isStrongPassword({
             minLength : 6,
             minUppercase: 1,
             minSymbols:0,
             minNumbers : 1
         }),
-    body('password_konfir')
-        .custom((value, {req}) => {
-            if(value !== req.body.password) {
-                throw new Error('Password konfirmasi tidak sesuai')
-            }
-            return true
-        }),
-    body('name')
-        //.isAlphanumeric().withMessage("Nama harus berupa huruf/string!")
-        .isLength({min : 4}).withMessage('Nama minimal mengandung 4 karakter')
-        .trim()
-        .not()
-        .isEmpty()
+    // body('password_konfir')
+    //     .custom((value, {req}) => {
+    //         if(value !== req.body.password) {
+    //             throw new Error('Password konfirmasi tidak sesuai')
+    //         }
+    //         return true
+    //     }),
+    // body('name')
+    //     //.isAlphanumeric().withMessage("Nama harus berupa huruf/string!")
+    //     .isLength({min : 4}).withMessage('Nama minimal mengandung 4 karakter')
+    //     .trim()
+    //     .not()
+    //     .isEmpty()
 ], authController.signup)
+
 
 
 

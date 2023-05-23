@@ -74,7 +74,7 @@ const swaggerSpecs = swaggerJSDoc(swaggerUIOptions)
 const app = express()
 
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: false })); //*! karena ada beberapa endpoint akan terima request multipart/form-data
 app.use(cors())
 
 app.use( helmet({
@@ -93,7 +93,6 @@ app.use(expressStatusMonitor())
 
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerSpecs))
 
-
 app.use('/auth', authRoutes)
 app.use('/user/toko', tokoRoutes)
 app.use('/user', userRoutes)
@@ -105,13 +104,9 @@ app.use((error, req, res, next) => {
     console.log(error)
     const status = error.statusCode || 500
     const message = error.message
-    const data = error.data
     res.status(status).json({
         errors: true,
-        data: {
-            message : message,
-            detail : data
-        }
+        message: message
     })
 })
 

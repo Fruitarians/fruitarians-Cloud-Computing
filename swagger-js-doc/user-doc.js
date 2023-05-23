@@ -114,7 +114,7 @@
  *                   example: false
  *                 message:
  *                   example: success edit data user
- *                 new_user_data:
+ *                 data:
  *                   type: object
  *                   properties:
  *                     email:
@@ -137,8 +137,8 @@
  *                     jam_operasional:
  *                       type: string
  *
- *       '406':
- *         description: input not match requirement
+ *       '400':
+ *         description: error upload pic
  *       '401':
  *         description: not authorized
  *       '500':
@@ -173,8 +173,6 @@
  *                 type: string
  *               password_baru:
  *                 type: string
- *               password_konfir:
- *                 tyoe: string
  *
  *     responses:
  *       '200':
@@ -184,15 +182,10 @@
  *             schema:
  *               type: object
  *               properties:
+ *                 errors:
+ *                   example: false
  *                 message:
  *                   example: User success change password
- *                 user:
- *                   type: object
- *                   properties:
- *                     email:
- *                       type: string
- *                     id:
- *                       type: string
  *       '401':
  *         description: gagal autentikasi dan ganti password gagal
  *       '500':
@@ -228,17 +221,22 @@
  *             schema:
  *               type: object
  *               properties:
+ *                 errors:
+ *                   example: false
  *                 message:
  *                   example: Success send token to email
- *                 token:
- *                   type: string
- *                 user:
+ *                 data:
  *                   type: object
  *                   properties:
- *                     email:
+ *                     token:
  *                       type: string
- *                     id:
- *                       type: string
+ *                     user:
+ *                       type: object
+ *                       properties:
+ *                         email:
+ *                           type: string
+ *                         id:
+ *                           type: string
  *
  *       '401':
  *         description: auth email failed, failed get token
@@ -269,8 +267,6 @@
  *                  type: string
  *                password:
  *                  type: string
- *                password_konfir:
- *                  type: string
  *
  *     responses:
  *       '200':
@@ -284,13 +280,16 @@
  *                   example: false
  *                 message:
  *                   example: Success change password from forget password
- *                 user:
+ *                 data:
  *                   type: object
  *                   properties:
- *                     email:
- *                       type: string
- *                     id:
- *                       type: string
+ *                     user:
+ *                       type: object
+ *                       properties:
+ *                         email:
+ *                           type: string
+ *                         id:
+ *                           type: string
  *       '401':
  *         description: token not valid
  *       '406':

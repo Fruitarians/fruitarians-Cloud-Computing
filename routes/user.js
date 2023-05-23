@@ -1,7 +1,5 @@
 const router = require('express').Router()
 
-// const { body } = require('express-validator')
-
 const { body } = require('express-validator')
 
 const userController = require('../controllers/userController')
@@ -13,19 +11,17 @@ const emailLimiter = require('../middleware/rate-limiter').emailReqLimiter
 
 const processFile = require('../middleware/upload')
 
+
 // * ------------------------------- route ------------------------------- * //
 
 
-
 // *! ROUTES FOR user-exc doc Dokumentasi File
-
 /**
  * ! catatan --------------------
  * ! merupakan routes untuk endpoint role USER untuk kemampuan khusus dari role USER
  * ! ---------------------------
  */
-
-// *! BOOKMARK
+// *! --------------------------------- BOOKMARK ---------------------------------
 router.get('/bookmark', isAuth, userRoleController.getAllBookmark)
 
 router.post('/bookmark', isAuth, userRoleController.postBookmark)
@@ -36,7 +32,9 @@ router.delete('/bookmark', isAuth, userRoleController.deleteBookmark)
 //*! --------------------------------------------------------------------------------------
 
 
-// * INFO
+
+
+// * INFO UTAMA USER
 
 router.get('/info', isAuth, userController.getInfo)
 
@@ -49,25 +47,25 @@ router.get('/toko/:idToko/:idBuah', isAuth, userController.detailBuah) //*! doc 
 
 // *! ketika pakai data input form-data (ada upload IMG) -> gunakan processFile untuk process data gambar dan input
 // *? gunakan processFile
-router.patch('/info',  processFile, [
-    body('name')
-        //.isAlphanumeric().withMessage("Nama harus berupa huruf/string!")
-        .isLength({min : 4}).withMessage('Nama minimal mengandung 4 karakter')
-        .trim()
-        .not()
-        .isEmpty()
-],isAuth, userController.changeInfo)
+router.patch('/info',  processFile, //[
+//     body('name')
+//         //.isAlphanumeric().withMessage("Nama harus berupa huruf/string!")
+//         .isLength({min : 4}).withMessage('Nama minimal mengandung 4 karakter')
+//         .trim()
+//         .not()
+//         .isEmpty()],
+    isAuth, userController.changeInfo)
 
 
 
 
 
 // * POST
-router.post('/forget_password', [
-    body('email', 'Gunakan format email dengan benar!')
-        .isEmail()
-        .normalizeEmail()
-] , emailLimiter, userController.getForgetPasswordToken )
+router.post('/forget_password', //[
+    // body('email', 'Gunakan format email dengan benar!')
+    //     .isEmail()
+    //     .normalizeEmail()] ,
+    emailLimiter, userController.getForgetPasswordToken )
 
 
 
@@ -81,14 +79,14 @@ router.patch('/password', isAuth, [
             minNumbers: 1,
             minSymbols: 0,
             minUppercase: 1
-        }),
-    body('password_konfir')
-        .custom((value, {req}) => {
-            if(value !== req.body.password_baru) {
-                throw new Error('Password konfirmasi tidak sesuai!')
-            }
-            return true
         })
+    // , body('password_konfir')
+    //     .custom((value, {req}) => {
+    //         if(value !== req.body.password_baru) {
+    //             throw new Error('Password konfirmasi tidak sesuai!')
+    //         }
+    //         return true
+    //     })
 ],  userController.changePassword)
 
 
@@ -103,14 +101,14 @@ router.patch('/forget_password',[
             minUppercase: 1,
             minSymbols:0,
             minNumbers : 1
-        }),
-    body('password_konfir')
-        .custom((value, {req}) => {
-            if(value !== req.body.password) {
-                throw new Error('Password konfirmasi tidak sesuai')
-            }
-            return true
-        }),
+        })
+    // , body('password_konfir')
+    //     .custom((value, {req}) => {
+    //         if(value !== req.body.password) {
+    //             throw new Error('Password konfirmasi tidak sesuai')
+    //         }
+    //         return true
+    //     }),
 ], userController.changeForgetPassword )
 
 

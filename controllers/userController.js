@@ -6,11 +6,13 @@ const crypto = require('crypto')
 const jwt = require('jsonwebtoken')
 const mailjet = require('node-mailjet').apiConnect(process.env.MAILJET_API_KEY, process.env.MAILJET_API_SECRET)
 
-// firestore
+// * firestore
 const db = require('../database/db')
 
 // * CONTROLLER UPLOAD PIC TO CLOUD STORAGE
 const fileController = require('./fileController')
+
+
 
 //* -------------------------- update controller -------------------------- *//
 
@@ -227,21 +229,16 @@ exports.detailBuah = async (req, res, next) => {
 }
 
 
-
+ // *! --------------------------------------------- ROUTING USER
 
 
 exports.getInfo = async (req, res, next) => {
     try {
-        //const user = await User.findById(req.userId)
         const user = (await db.collection('users').doc(req.userId).get()).data()
         if(!user){
             const err = new Error('Get Info Failed')
             err.statusCode = statusCode['401_unauthorized']
             throw err
-        }
-
-        if(user.role !== 'user'){
-            // * KETIKA ROLE BUKAN user MAKA AMBIL FOTO PROFIL TOKO/VENDOR jika ada
         }
 
         //*! format createdAt (kapan bergabung agar bisa di baca)
@@ -251,6 +248,7 @@ exports.getInfo = async (req, res, next) => {
 
         res.status(statusCode['200_ok']).json({
             errors : false,
+            message: 'success get user info',
             data : {
                 id: req.userId,
                 email: user.email,
@@ -264,7 +262,6 @@ exports.getInfo = async (req, res, next) => {
                 gambar_profil: user.gambar_profil
             }
         })
-
 
     } catch (e) {
         if(!e.statusCode) {
@@ -284,8 +281,7 @@ exports.changeInfo = async (req, res, next) => {
         const errors = validationResult(req)
         if(!errors.isEmpty()){
             const err = new Error('Edit info gagal!')
-            err.statusCode = statusCode['406_not_acceptable']
-            err.data = errors.array()
+            err.statusCode = statusCode['401_unauthorized']
             throw err
         }
 
@@ -338,9 +334,6 @@ exports.changeInfo = async (req, res, next) => {
 
                 user.gambar_profil = uploadPic
             }
-            // else {
-            //     console.log('gada file')
-            // }
         }
 
         //*! update user Updated
@@ -365,7 +358,7 @@ exports.changeInfo = async (req, res, next) => {
         res.status(statusCode['200_ok']).json({
             errors : false,
             message: 'success edit data user',
-            new_user_data : new_data_response
+            data : new_data_response
         })
 
     } catch (e) {
@@ -392,7 +385,7 @@ exports.changePassword = async (req, res, next) => {
         const errors = validationResult(req)
         if(!errors.isEmpty()){
             const err = new Error('Failed Change Password')
-            err.statusCode = statusCode['406_not_acceptable']
+            err.statusCode = statusCode['401_unauthorized']
             err.data = errors.array()
             throw err
         }
@@ -410,10 +403,11 @@ exports.changePassword = async (req, res, next) => {
             failed_change_pass('Password lama tidak sesuai dengan akun anda! ganti password gagal!')
         }
 
-        const passEqual = await bcrypt.compare(newPassword, user.password)
-        if(passEqual){
-            failed_change_pass('Password baru sama dengan password lama, proses ganti password gagal, silahkan gunakan password baru yang berbeda!')
-        }
+        //*! user bisa set password baru sama dengan password lama
+        // const passEqual = await bcrypt.compare(newPassword, user.password)
+        // if(passEqual){
+        //     failed_change_pass('Password baru sama dengan password lama, proses ganti password gagal, silahkan gunakan password baru yang berbeda!')
+        // }
 
         const newPass = await bcrypt.hash(newPassword, 12)
 
@@ -423,11 +417,8 @@ exports.changePassword = async (req, res, next) => {
         await db.collection('users').doc(req.userId).update(user)
 
         res.status(statusCode['200_ok']).json({
-            message: 'User success change password',
-            user: {
-                email: user.email,
-                id: req.userId
-            }
+            errors: false,
+            message: 'User success change password'
         })
 
     } catch (e) {
@@ -447,7 +438,7 @@ exports.getForgetPasswordToken = async (req, res, next) => {
         const errors = validationResult(req)
         if(!errors.isEmpty()) {
             const err = new Error('Get Forget Token Failed!')
-            err.statusCode = statusCode['406_unauthorized']
+            err.statusCode = statusCode['401_unauthorized']
             err.data = errors.array()
             throw err
         }
@@ -506,10 +497,12 @@ exports.getForgetPasswordToken = async (req, res, next) => {
         res.status(statusCode['200_ok']).json({
             errors: false,
             message: 'Success send token to email',
-            token: forgetPassToken,
-            user: {
-                email: user.email,
-                id: userId
+            data: {
+                token: forgetPassToken,
+                user: {
+                    email: user.email,
+                    id: userId
+                }
             }
         })
 
@@ -536,14 +529,12 @@ exports.changeForgetPassword = async (req, res, next) => {
         const errors = validationResult(req)
         if(!errors.isEmpty()) {
             const err = new Error('Failed Change Password')
-            err.statusCode = statusCode['406_not_acceptable']
+            err.statusCode = statusCode['401_unauthorized']
             err.data = errors.array()
             throw err
         }
 
         const password = req.body.password
-        // *! ubahan baru tidak pakai email saat input
-        // const email = req.body.email
         const token = req.body.change_password_token
 
         const decoded_token = jwt.verify(token , process.env.JWT_SECRET)
@@ -551,7 +542,7 @@ exports.changeForgetPassword = async (req, res, next) => {
             failed_change_pass('Token tidak valid!')
         }
 
-        //const user = await User.findById(decoded_token.userId)
+
         //* karena dibawah dibutuhkan email maka akan gunakan filter saat get user data agar dapat sekalian dapatkan id document
         let data = await db.collection('users').where('email', '==', decoded_token.email).limit(1).get()
         let user
@@ -564,20 +555,16 @@ exports.changeForgetPassword = async (req, res, next) => {
             userId = data.id
         }
 
-        // *! ubahan baru tidak pakai email saat input
-        // if(user.email !== email){
-        //     failed_change_pass('Email dimasukan tidak sesuai dengan data token!')
-        // }
-
 
         if(userId !== decoded_token.userId || user.email !== decoded_token.email || user.token.forgetPass !== decoded_token.token ){
             failed_change_pass('Token tidak valid!')
         }
 
-        const passEqual = await bcrypt.compare(password, user.password)
-        if(passEqual) {
-            failed_change_pass('Password baru sama dengan password lama, proses ganti password gagal!')
-        }
+        //*! User bisa ganti password baru sama dengan password lama
+        // const passEqual = await bcrypt.compare(password, user.password)
+        // if(passEqual) {
+        //     failed_change_pass('Password baru sama dengan password lama, proses ganti password gagal!')
+        // }
 
         const newPassHash = await bcrypt.hash(password, 12)
         user.password = newPassHash
@@ -590,7 +577,7 @@ exports.changeForgetPassword = async (req, res, next) => {
         res.status(statusCode['200_ok']).json({
             errors: false,
             message: "Success change password from forget password",
-            user: {
+            data: {
                 email: user.email,
                 id: userId
             }

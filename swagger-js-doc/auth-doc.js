@@ -85,14 +85,19 @@
  *               properties:
  *                 errors:
  *                   example: false
- *                 accessToken:
- *                   type: string
- *                 token_type:
- *                   example: Bearer
- *                 email:
- *                   type: string
- *                 name:
- *                   type: string
+ *                 message:
+ *                   exanole: success login
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     accessToken:
+ *                       type: string
+ *                     token_type:
+ *                       example: Bearer
+ *                     email:
+ *                       type: string
+ *                     name:
+ *                       type: string
  *       '401':
  *         description: email/ Password Salah!
  *       '500':
@@ -122,9 +127,6 @@
  *                 type: string
  *                 example: username1@gmail.com
  *               password:
- *                 type: string
- *                 example: Password1
- *               password_konfir:
  *                 type: string
  *                 example: Password1
  *               name:
@@ -191,10 +193,9 @@
  *               properties:
  *                 errors:
  *                   example: false
- *                 status:
+ *                 message:
  *                   example: log out
- *                 email:
- *                   type: string
+ *
  *       '401':
  *         description: Auth Error, failed logout
  *       '500':

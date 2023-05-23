@@ -16,9 +16,8 @@ exports.signup = async (req, res, next) => {
     try {
         const errors = validationResult(req)
         if(!errors.isEmpty()){
-            const err = new Error('SignUp Gagal, Data tidak sesuai')
-            err.statusCode = statusCode['406_not_acceptable']
-            err.data = errors.array()
+            const err = new Error('SignUp Gagal, Data tidak sesuai, pastikan password di set harus menggunakan minimal 1 angka dan 1 huruf kapital dengan minimal 6 karakter atau email sudah digunakan')
+            err.statusCode = statusCode['401_unauthorized']
             throw err
         }
 
@@ -26,7 +25,7 @@ exports.signup = async (req, res, next) => {
         const password = req.body.password
         const name = req.body.name
         const role = req.body.role
-        // *! const alamat = req.body.alamat // alamat diubah jadi negara, kota deskripsi
+
         const negara = req.body.negara
         const kota = req.body.kota
         const deskripsi_alamat = req.body.deskripsi_alamat
@@ -49,16 +48,9 @@ exports.signup = async (req, res, next) => {
 
         if (role !== 'user'){
             // *! createdAt sudah otomatis dibuat oleh objek dan dibuat untuk semua role user dan sekalian juga akan ada field updatedAT
-            // const today = new Date();
-            // const options = { day: 'numeric', month: 'long', year: 'numeric' };
-            // const formattedDate = today.toLocaleDateString('id-ID', options);
-            // const createdAt = formattedDate
-            //
-            // newUser.createdAt = createdAt
 
             newUser.jam_operasional = null
             newUser.deskripsi = null
-            // newUser.gambar_profil = null
 
             if(role === 'toko'){
                 newUser.buah = []
@@ -68,16 +60,11 @@ exports.signup = async (req, res, next) => {
             newUser.bookmark = []
         }
 
-        //console.log(newUser)
         await db.collection('users').doc().set(newUser)
 
-        res.status(statusCode['201_created']).json({
+        res.status(statusCode['200_ok']).json({
             errors: false,
             message : "User Success Created"
-            //*? hilangkan data email ketika response
-            // , user : {
-            //     email : newUser.email
-            // }
         })
 
     } catch (e) {
@@ -86,7 +73,6 @@ exports.signup = async (req, res, next) => {
         }
         next(e)
     }
-
 }
 
 
@@ -139,10 +125,13 @@ exports.login = async (req, res, next) => {
 
         res.status(statusCode['200_ok']).json({
             errors: false,
-            accessToken : accessToken,
-            email : user.email,
-            name: user.name,
-            token_type : 'Bearer'
+            message: 'success login',
+            data : {
+                accessToken : accessToken,
+                email : user.email,
+                name: user.name,
+                token_type : 'Bearer'
+            }
         })
 
     } catch (e) {
@@ -170,10 +159,9 @@ exports.logout = async (req, res, next) => {
         user.token.auth = null
         await db.collection('users').doc(req.userId).update(user)
 
-        res.status(statusCode['202_accepted']).json({
+        res.status(statusCode['200_ok']).json({
             errors : false,
-            status : 'log out',
-            email: user.email
+            message : 'log out'
         })
 
     } catch(e) {
@@ -182,5 +170,4 @@ exports.logout = async (req, res, next) => {
         }
         next(e)
     }
-
 }
