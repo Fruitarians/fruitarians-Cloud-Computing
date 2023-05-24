@@ -53,6 +53,8 @@
  *                         type: string
  *                       wa_link:
  *                         type: string
+ *                       gambar_profil:
+ *                         type: string
  *                       deskripsi:
  *                         type: string
  *                       alamat:

@@ -53,6 +53,7 @@ exports.getAllRole = async (req, res, next) => {
                 email: dataRole.email,
                 telepon: dataRole.telepon,
                 wa_link: 'https://api.whatsapp.com/send?phone=62' + dataRole.telepon,
+                gambar_profil :dataRole.gambar_profil ,
                 deskripsi: dataRole.deskripsi,
                 alamat: dataRole.alamat ,
                 bergabung: formattedDate,
