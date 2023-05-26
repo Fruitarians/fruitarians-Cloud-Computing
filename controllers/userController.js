@@ -20,7 +20,6 @@ const fileController = require('./fileController')
 // * dapatkan info data sederhana dari role toko/ vvendor
 exports.getAllRole = async (req, res, next) => {
     try {
-
         const role = req.params.role // role hanya terima vendor/ toko
         // console.log(role)
         if( role !== 'toko' && role !== 'vendor'){
@@ -61,6 +60,17 @@ exports.getAllRole = async (req, res, next) => {
             }
             allData.push(data)
         })
+
+        // * IF NEED CARD DATA
+        if(req.query.card === 'true'){
+            const randomIndex = Math.floor(Math.random() * allData.length);
+            const randomItem = allData[randomIndex];
+            res.status(statusCode['200_ok']).json({
+                errors: false,
+                message: `Get ${role} Cards Data`,
+                data : randomItem
+            })
+        }
 
 
         // *? configure pagination
@@ -139,12 +149,13 @@ exports.detailInfo = async (req, res, next) => {
                     id: doc.id,
                     name: buahData.name,
                     harga: parseInt(buahData.harga),
-                    satuan: buahData.satuan
+                    satuan: buahData.satuan,
+                    gambar: buahData.gambar
                 }
                 infoData.buah.push(dataBuah)
             })
 
-           // console.log(infoData.buah)
+            // console.log(infoData.buah)
 
             // *? configure pagination
             const totalData = allData.length
@@ -230,7 +241,7 @@ exports.detailBuah = async (req, res, next) => {
 }
 
 
- // *! --------------------------------------------- ROUTING USER
+// *! --------------------------------------------- ROUTING USER
 
 
 exports.getInfo = async (req, res, next) => {
