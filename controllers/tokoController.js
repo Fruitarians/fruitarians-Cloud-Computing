@@ -28,6 +28,8 @@ exports.detailBuah = async (req, res, next) => {
         }
 
         buah.harga = parseInt(buah.harga)
+        //* tambah stok properti
+        buah.stok = parseInt(buah.stok)
 
 
         //*! format createdAt (kapan bergabung agar bisa di baca)
@@ -79,6 +81,7 @@ exports.getAllBuah = async (req, res, next) => {
         allBuah.forEach(doc => {
             const buahdata = {buahId : doc.id, ...doc.data()}
             buahdata.harga = parseInt(buahdata.harga)
+            buahdata.stok = parseInt(buahdata.stok)
             dataBuah.push(buahdata)
         })
 
@@ -144,8 +147,10 @@ exports.createBuah = async (req, res, next) => {
         const satuan = req.body.satuan
         const deskripsi = req.body.deskripsi
         const creator = req.userId
+        //*! tambah stok properti
+        const stok = parseInt(req.body.stok)
 
-        const buah = new Buah(name, harga, satuan, deskripsi, creator)
+        const buah = new Buah(name, harga, satuan, deskripsi, creator, stok)
 
         const newBuah = {...buah}
         const addBuah = await db.collection('buah').add(newBuah)
@@ -200,6 +205,7 @@ exports.createBuah = async (req, res, next) => {
                 name: newBuah.name,
                 harga: newBuah.harga,
                 satuan: newBuah.satuan,
+                stok: newBuah.stok,
                 deskripsi: newBuah.deskripsi,
                 gambar: newBuah.gambar
             }
@@ -238,11 +244,15 @@ exports.editBuah = async (req, res, next) => {
         const newSatuan = req.body.satuan
         const newDeskripsi = req.body.deskripsi
         //const newGambar = req.body.gambar
+        //* tambah stok properti
+        const newStok = req.body.stok
 
         buahEdit.name = newName
         buahEdit.harga = parseInt(newHarga)
         buahEdit.satuan = newSatuan
         buahEdit.deskripsi = newDeskripsi
+        //* tambah stok properti
+        buahEdit.stok = parseInt(newStok)
 
         const general_response = {
             errors: false,
@@ -282,6 +292,7 @@ exports.editBuah = async (req, res, next) => {
                 name : buahEdit.name,
                 harga: buahEdit.harga,
                 satuan: buahEdit.satuan,
+                stok: buahEdit.stok,
                 deskripsi: buahEdit.deskripsi,
                 gambar: buahEdit.gambar
             }

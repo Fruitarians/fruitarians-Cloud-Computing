@@ -145,17 +145,22 @@ exports.detailInfo = async (req, res, next) => {
 
             allData.forEach(doc => {
                 const buahData = doc.data()
+                //*! BANTUAN sementara
+                if(!buahData.stok){
+                    buahData.stok = 0
+                }
                 const dataBuah = {
                     id: doc.id,
                     name: buahData.name,
                     harga: parseInt(buahData.harga),
+                    stok: buahData.stok,
                     satuan: buahData.satuan,
                     gambar: buahData.gambar
                 }
                 infoData.buah.push(dataBuah)
             })
 
-            // console.log(infoData.buah)
+           // console.log(infoData.buah)
 
             // *? configure pagination
             const totalData = allData.length
@@ -207,6 +212,7 @@ exports.detailBuah = async (req, res, next) => {
         }
 
         buah.harga = parseInt(buah.harga)
+        buah.stok = parseInt(buah.stok)
 
         //*! format createdAt (kapan bergabung agar bisa di baca)
         const date = new Date(user.createdAt._seconds * 1000); // Konversi detik ke milidetik
@@ -241,7 +247,7 @@ exports.detailBuah = async (req, res, next) => {
 }
 
 
-// *! --------------------------------------------- ROUTING USER
+ // *! --------------------------------------------- ROUTING USER
 
 
 exports.getInfo = async (req, res, next) => {

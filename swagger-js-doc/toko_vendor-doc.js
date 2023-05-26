@@ -25,6 +25,9 @@
  *       - name: size
  *         in: query
  *         description: berapa data ditampilkan dalam 1 halaman, ketika kosong akan set default tampilkan 3 data tiap halaman
+ *       - name: card
+ *         in: query
+ *         description: isi nilai dengan true untuk dapatkan 1 data cards random
  *
  *     responses:
  *       '200':
@@ -178,7 +181,11 @@
  *                             type: string
  *                           harga:
  *                             type: integer
+ *                           stok:
+ *                             type: integer
  *                           satuan:
+ *                             type: string
+ *                           gambar:
  *                             type: string
  *
  *
@@ -284,6 +291,8 @@
  *                       type: integer
  *                     satuan:
  *                       type: string
+ *                     stok:
+ *                       type: integer
  *                     gambar:
  *                       type: string
  *                     deskripsi:
@@ -360,7 +369,9 @@
  *                       name:
  *                         type: string
  *                       harga:
- *                         type: string
+ *                         type: integer
+ *                       stok:
+ *                         type: integer
  *                       gambar:
  *                         type: string
  *                       creator:

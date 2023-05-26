@@ -66,6 +66,8 @@
  *                       type: string
  *                     satuan:
  *                       type: string
+ *                     stok:
+ *                       type: integer
  *       '401':
  *         description: Not Authorized User
  *         content:
@@ -172,6 +174,8 @@
  *                         type: string
  *                       satuan:
  *                         type: string
+ *                       stok:
+ *                         type: integer
  *       '401':
  *         description: Not Authorized User
  *         content:
@@ -227,6 +231,8 @@
  *                 example: kg
  *               deskripsi:
  *                 type: string
+ *               stok:
+ *                 type: ineteger
  *               file:
  *                 type: file
  *
@@ -265,6 +271,8 @@
  *                       type: integer
  *                     satuan:
  *                       type: string
+ *                     stok:
+ *                       type: integer
  *                     deskripsi:
  *                       type: string
  *                     gambar:
@@ -323,6 +331,8 @@
  *               satuan:
  *                 type: string
  *                 example: kg
+ *               stok:
+ *                 type: integer
  *               deskripsi:
  *                 type: string
  *               file:
@@ -361,6 +371,8 @@
  *                       type: number
  *                     satuan:
  *                       type: string
+ *                     stok:
+ *                       type: integer
  *                     deskripsi:
  *                       type: string
  *                     gambar:

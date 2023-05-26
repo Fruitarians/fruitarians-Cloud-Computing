@@ -26,10 +26,16 @@ exports.getAllBuah = async (req, res, next) => {
         let dataBuah = []
         allBuah.forEach(doc => {
             const buahData = doc.data()
+            //*! bantuan sementara untuk STOK
+            if(!buahData.stok) {
+                buahData.stok = 0
+            }
             const buah = {
                 idBuah: doc.id,
                 name: buahData.name,
                 harga: buahData.harga,
+                //* tambah properti stok
+                stok: buahData.stok,
                 gambar: buahData.gambar,
                 creator: buahData.creator
             }
