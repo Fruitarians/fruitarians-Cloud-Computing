@@ -72,7 +72,16 @@
  *                       bergabung:
  *                         type: string
  *                       jam_operasional:
- *                         type: string
+ *                         type: object
+ *                         properties:
+ *                           jam_buka:
+ *                             type: string
+ *                           jam_tutup:
+ *                             type: string
+ *                           hari_buka_awal:
+ *                             type: string
+ *                           hari_buka_akhir:
+ *                             type: string
  *       '401':
  *         description: not authorized
  *         content:
@@ -162,7 +171,16 @@
  *                     telepon:
  *                       type: string
  *                     jam_operasional:
- *                       type: string
+ *                       type: object
+ *                       properties:
+ *                         jam_buka:
+ *                           type: string
+ *                         jam_tutup:
+ *                           type: string
+ *                         hari_buka_awal:
+ *                           type: string
+ *                         hari_buka_akhir:
+ *                           type: string
  *                     wa_link:
  *                       type: string
  *                     bergabung:
@@ -275,7 +293,16 @@
  *                     deskripsi:
  *                       type: string
  *                     jam_operasional:
- *                       type: string
+ *                       type: object
+ *                       properties:
+ *                         jam_buka:
+ *                           type: string
+ *                         jam_tutup:
+ *                           type: string
+ *                         hari_buka_awal:
+ *                           type: string
+ *                         hari_buka_akhir:
+ *                           type: string
  *                     bergabung:
  *                       type: string
  *                     gambar_profil:
@@ -285,7 +312,7 @@
  *                   properties:
  *                     idBuah:
  *                       type: string
- *                     nmae:
+ *                     name:
  *                       type: string
  *                     harga:
  *                       type: integer

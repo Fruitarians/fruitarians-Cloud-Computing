@@ -38,14 +38,17 @@ router.delete('/bookmark', isAuth, userRoleController.deleteBookmark)
 
 router.get('/info', isAuth, userController.getInfo)
 
-router.get('/:role', isAuth, userController.getAllRole) // *! doc di toko_vendor
+// *! --------------------------------- dokumentasi toko_vendor ---------------------------------
 
-router.get('/:role/:id', isAuth, userController.detailInfo) //*! doc di toko_vendor
+router.get('/:role', isAuth, userController.getAllRole)
 
-router.get('/toko/:idToko/:idBuah', isAuth, userController.detailBuah) //*! doc ada di toko_vendor
+router.get('/:role/:id', isAuth, userController.detailInfo)
 
+router.get('/toko/:idToko/:idBuah', isAuth, userController.detailBuah)
 
-// *! ketika pakai data input form-data (ada upload IMG) -> gunakan processFile untuk process data gambar dan input
+//*! --------------------------------------------------------------------------------------
+
+// * ketika pakai data input form-data (ada upload IMG) -> gunakan processFile untuk process data gambar dan input
 // *? gunakan processFile
 router.patch('/info',  processFile, //[
 //     body('name')

@@ -16,6 +16,8 @@ const fileController = require('./fileController')
 
 //* -------------------------- update controller -------------------------- *//
 
+// *! --------------------------------------------- ROUTING UNTUK DOKUMENTASI toko_vendor
+
 // *? -- note -> doc di toko_vendor
 // * dapatkan info data sederhana dari role toko/ vvendor
 exports.getAllRole = async (req, res, next) => {
@@ -233,7 +235,13 @@ exports.detailBuah = async (req, res, next) => {
             } ,
             buah : {
                 idBuah: idBuah,
-                ...buah
+                name: buah.name,
+                harga: buah.harga,
+                satuan: buah.satuan,
+                stok: buah.stok,
+                gambar: buah.gambar,
+                deskripsi: buah.deskripsi,
+                creator: buah.creator
             }
         })
 
@@ -247,7 +255,7 @@ exports.detailBuah = async (req, res, next) => {
 }
 
 
- // *! --------------------------------------------- ROUTING USER
+// *! --------------------------------------------- ROUTING USER
 
 
 exports.getInfo = async (req, res, next) => {
@@ -332,7 +340,12 @@ exports.changeInfo = async (req, res, next) => {
         // * jika role bukan 'user' -> maka akan terima 2 data request body lagi
         if(user.role !== 'user') {
             const newDeskripsi = req.body.deskripsi
-            const newJam = req.body.jam_operasional
+            const newJam = {
+                jam_buka: req.body.jam_buka,
+                jam_tutup: req.body.jam_tutup,
+                hari_buka_awal: req.body.hari_buka_awal,
+                hari_buka_akhir: req.body.hari_buka_akhir
+            }
 
             user.deskripsi = newDeskripsi
             user.jam_operasional = newJam

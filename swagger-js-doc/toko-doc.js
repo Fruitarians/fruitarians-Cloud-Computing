@@ -46,7 +46,16 @@
  *                     deskripsi:
  *                       type: string
  *                     jam_operasional:
- *                       type: string
+ *                       type: object
+ *                       properties:
+ *                         jam_buka:
+ *                           type: string
+ *                         jam_tutup:
+ *                           type: string
+ *                         hari_buka_awal:
+ *                           type: string
+ *                         hari_buka_akhir:
+ *                           type: string
  *                     bergabung:
  *                       type: string
  *                     gambar_profil:
@@ -150,7 +159,16 @@
  *                     deskripsi:
  *                       type: string
  *                     jam_operasional:
- *                       type: string
+ *                       type: object
+ *                       properties:
+ *                         jam_buka:
+ *                           type: string
+ *                         jam_tutup:
+ *                           type: string
+ *                         hari_buka_awal:
+ *                           type: string
+ *                         hari_buka_akhir:
+ *                           type: string
  *                     bergabung:
  *                       type: string
  *                     gambar_profil:

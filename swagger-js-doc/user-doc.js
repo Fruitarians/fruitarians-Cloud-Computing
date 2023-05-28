@@ -46,12 +46,21 @@
  *                           type: string
  *                     role:
  *                       type: string
- *                     profil_link:
+ *                     telepon:
  *                       type: string
  *                     deskripsi:
  *                       type: string
  *                     jam_operasional:
- *                       type: string
+ *                       type: object
+ *                       properties:
+ *                         jam_buka:
+ *                           type: string
+ *                         jam_tutup:
+ *                           type: string
+ *                         hari_buka_awal:
+ *                           type: string
+ *                         hari_buka_akhir:
+ *                           type: string
  *                     bergabung:
  *                       type: string
  *                     gambar_profil:
@@ -118,8 +127,18 @@
  *                 type: string
  *               deskripsi:
  *                 type: string
- *               jam_operasional:
+ *               jam_buka:
  *                 type: string
+ *                 description: bagian dari waktu operasional *khusus role toko/vendor
+ *               jam_tutup:
+ *                 type: string
+ *                 description: bagian dari waktu operasional *khusus role toko/vendor
+ *               hari_buka_awal:
+ *                 type: string
+ *                 description: bagian dari waktu operasional *khusus role toko/vendor
+ *               hari_buka_akhir:
+ *                 type: string
+ *                 description: bagian dari waktu operasional *khusus role toko/vendor
  *               file:
  *                 type: file
  *
@@ -156,6 +175,17 @@
  *                     deskripsi:
  *                       type: string
  *                     jam_operasional:
+ *                       type: object
+ *                       properties:
+ *                         jam_buka:
+ *                           type: string
+ *                         jam_tutup:
+ *                           type: string
+ *                         hari_buka_awal:
+ *                           type: string
+ *                         hari_buka_akhir:
+ *                           type: string
+ *                     gambar_profil:
  *                       type: string
  *
  *       '400':

@@ -50,7 +50,15 @@ exports.detailBuah = async (req, res, next) => {
                 bergabung: formattedDate,
                 gambar_profil: user.gambar_profil
             },
-            buah: buah
+            buah: {
+                id: req.params.idBuah,
+                name: buah.name,
+                harga: buah.harga,
+                deskripsi: buah.deskripsi,
+                gambar: buah.gambar,
+                satuan: buah.satuan,
+                stok: buah.stok,
+            }
         })
 
     } catch (e) {
@@ -79,7 +87,14 @@ exports.getAllBuah = async (req, res, next) => {
         const allBuah = await db.collection('buah').where('creator', '==', req.userId).get()
         let dataBuah = []
         allBuah.forEach(doc => {
-            const buahdata = {buahId : doc.id, ...doc.data()}
+            const data = doc.data()
+            const buahdata = {
+                id : doc.id,
+                name: data.name,
+                deskripsi: data.deskripsi,
+                gambar: data.gambar,
+                satuan: data.satuan
+            }
             buahdata.harga = parseInt(buahdata.harga)
             buahdata.stok = parseInt(buahdata.stok)
             dataBuah.push(buahdata)
