@@ -15,13 +15,16 @@ const processFile = require('../middleware/upload')
 // * ------------------------------- route ------------------------------- * //
 
 
-// *! ROUTES FOR user-exc doc Dokumentasi File
+// *! ROUTES untuk "user-exc-doc.js" Dokumentasi File
+// *! ---------------------------- DOKUMENTASI ada di "toko_vendor-doc.js" ----------------------------
+// * Controller file -> "userRoleController.js"
 /**
- * ! catatan --------------------
- * ! merupakan routes untuk endpoint role USER untuk kemampuan khusus dari role USER
- * ! ---------------------------
+ * ? catatan --------------------
+ * ? merupakan routes untuk endpoint role USER untuk kemampuan khusus dari role USER
+ * ? ---------------------------
  */
-// *! --------------------------------- BOOKMARK ---------------------------------
+// *! ------------- BOOKMARK -------------
+
 router.get('/bookmark', isAuth, userRoleController.getAllBookmark)
 
 router.post('/bookmark', isAuth, userRoleController.postBookmark)
@@ -29,7 +32,7 @@ router.post('/bookmark', isAuth, userRoleController.postBookmark)
 router.delete('/bookmark', isAuth, userRoleController.deleteBookmark)
 
 
-//*! --------------------------------------------------------------------------------------
+//*! -------------------------------------------------------------------------------------------------
 
 
 
@@ -38,7 +41,7 @@ router.delete('/bookmark', isAuth, userRoleController.deleteBookmark)
 
 router.get('/info', isAuth, userController.getInfo)
 
-// *! --------------------------------- dokumentasi toko_vendor ---------------------------------
+// *! ---------------------------- DOKUMENTASI ada di "toko_vendor-doc.js" ----------------------------
 
 router.get('/:role', isAuth, userController.getAllRole)
 
@@ -50,31 +53,10 @@ router.get('/toko/:idToko/:idBuah', isAuth, userController.detailBuah)
 
 // * ketika pakai data input form-data (ada upload IMG) -> gunakan processFile untuk process data gambar dan input
 // *? gunakan processFile
-router.patch('/info',  processFile, //[
-//     body('name')
-//         //.isAlphanumeric().withMessage("Nama harus berupa huruf/string!")
-//         .isLength({min : 4}).withMessage('Nama minimal mengandung 4 karakter')
-//         .trim()
-//         .not()
-//         .isEmpty()],
-    isAuth, userController.changeInfo)
+router.patch('/info',  processFile, isAuth, userController.changeInfo)
 
 
 
-
-
-// * POST
-router.post('/forget_password', //[
-    // body('email', 'Gunakan format email dengan benar!')
-    //     .isEmail()
-    //     .normalizeEmail()] ,
-    emailLimiter, userController.getForgetPasswordToken )
-
-
-
-
-
-// * PATCH
 router.patch('/password', isAuth, [
     body('password_baru', 'Password harus berisi minimal 6 karakter dengan memiliki minimal 1 angka dan 1 karakter uppercase')
         .isStrongPassword({
@@ -83,21 +65,15 @@ router.patch('/password', isAuth, [
             minSymbols: 0,
             minUppercase: 1
         })
-    // , body('password_konfir')
-    //     .custom((value, {req}) => {
-    //         if(value !== req.body.password_baru) {
-    //             throw new Error('Password konfirmasi tidak sesuai!')
-    //         }
-    //         return true
-    //     })
-],  userController.changePassword)
+    ],  userController.changePassword)
+
+
+
+router.post('/forget_password', emailLimiter, userController.getForgetPasswordToken )
+
 
 
 router.patch('/forget_password',[
-    //*! revisi baru ngga pake email
-    // body('email', "Masukan format email dengan benar!")
-    //     .isEmail()
-    //     .normalizeEmail(),
     body('password', 'Password harus setidaknya mengandung 1 angka dan huruf Kapital dengan minimal sepanjang 6 karakter')
         .isStrongPassword({
             minLength : 6,
@@ -105,14 +81,9 @@ router.patch('/forget_password',[
             minSymbols:0,
             minNumbers : 1
         })
-    // , body('password_konfir')
-    //     .custom((value, {req}) => {
-    //         if(value !== req.body.password) {
-    //             throw new Error('Password konfirmasi tidak sesuai')
-    //         }
-    //         return true
-    //     }),
 ], userController.changeForgetPassword )
+
+
 
 
 

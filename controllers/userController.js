@@ -15,11 +15,11 @@ const repl = require("repl");
 
 
 
-//* -------------------------- update controller -------------------------- *//
+//* -------------------------- controller -------------------------- *//
 
-// *! --------------------------------------------- ROUTING UNTUK DOKUMENTASI toko_vendor
+// *! ----------- CONTROLLER UNTUK DOKUMENTASI di "toko_vendor-doc.js" -----------
 
-// *? -- note -> doc di toko_vendor
+// *? -- note -> doc di "toko_vendor-doc.js"
 // * dapatkan info data sederhana dari role toko/ vvendor
 exports.getAllRole = async (req, res, next) => {
     try {
@@ -103,7 +103,7 @@ exports.getAllRole = async (req, res, next) => {
 
 
 
-// *? -- note -> doc di toko_vendor
+// *? -- note -> doc di "toko_vendor-doc.js"
 // * endpoint dapatkan info user toko/ vendor -> misal diklik akan masuk ke info detail dimana hanya akan menerima param toko/ vendor
 exports.detailInfo = async (req, res, next) => {
     try {
@@ -172,7 +172,6 @@ exports.detailInfo = async (req, res, next) => {
             const startData = ((currentPage - 1) * perPage)
             // *! ubah array agar sesuai page
             infoData.buah = infoData.buah.slice(startData, startData + perPage)
-
         }
 
         res.status(statusCode['200_ok']).json({
@@ -192,7 +191,7 @@ exports.detailInfo = async (req, res, next) => {
 
 
 
-// *? -- note -> doc di toko_vendor
+// *? -- note -> doc di "toko_vendor-doc.js"
 // * endpoint dapatkan info detail buah dari sebuah toko -> misal user akses data detail toko kemudian klik untuk info detail buah maka dapat endpoint ini diharapkan
 exports.detailBuah = async (req, res, next) => {
     try{
@@ -255,8 +254,10 @@ exports.detailBuah = async (req, res, next) => {
     }
 }
 
+// *! ------------------------ ------------------------ ------------------------
 
-// *! --------------------------------------------- ROUTING USER
+
+
 
 
 exports.getInfo = async (req, res, next) => {
@@ -304,14 +305,6 @@ exports.getInfo = async (req, res, next) => {
 
 exports.changeInfo = async (req, res, next) => {
     try{
-
-        // *! verifikasi dihilangkan
-        // const errors = validationResult(req)
-        // if(!errors.isEmpty()){
-        //     const err = new Error('Edit info gagal!')
-        //     err.statusCode = statusCode['401_unauthorized']
-        //     throw err
-        // }
 
         const user = (await db.collection('users').doc(req.userId).get()).data()
         if(!user){
@@ -415,7 +408,6 @@ exports.changeInfo = async (req, res, next) => {
 
 
 
-
 exports.changePassword = async (req, res, next) => {
     function failed_change_pass(msg) {
         const err = new Error(msg)
@@ -446,10 +438,6 @@ exports.changePassword = async (req, res, next) => {
         }
 
         //*! user bisa set password baru sama dengan password lama
-        // const passEqual = await bcrypt.compare(newPassword, user.password)
-        // if(passEqual){
-        //     failed_change_pass('Password baru sama dengan password lama, proses ganti password gagal, silahkan gunakan password baru yang berbeda!')
-        // }
 
         const newPass = await bcrypt.hash(newPassword, 12)
 
@@ -477,16 +465,6 @@ exports.changePassword = async (req, res, next) => {
 
 exports.getForgetPasswordToken = async (req, res, next) => {
     try {
-        //*! verifikasi di hilangkan
-        // const errors = validationResult(req)
-        // if(!errors.isEmpty()) {
-        //     const err = new Error('Get Forget Token Failed!')
-        //     err.statusCode = statusCode['401_unauthorized']
-        //     err.data = errors.array()
-        //     throw err
-        // }
-
-        //const user = await User.findOne({ email : req.body.email })
         // * karena pakai email maka pencarian user juga pakai filter
         let data = await db.collection('users').where('email', '==', req.body.email).limit(1).get()
         let user
@@ -604,10 +582,6 @@ exports.changeForgetPassword = async (req, res, next) => {
         }
 
         //*! User bisa ganti password baru sama dengan password lama
-        // const passEqual = await bcrypt.compare(password, user.password)
-        // if(passEqual) {
-        //     failed_change_pass('Password baru sama dengan password lama, proses ganti password gagal!')
-        // }
 
         const newPassHash = await bcrypt.hash(password, 12)
         user.password = newPassHash

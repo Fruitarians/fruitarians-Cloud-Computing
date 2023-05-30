@@ -1,6 +1,7 @@
 /**
  * ! catatan ------------
- * ! berisi controller untuk hal EXTRA yang hanya bisa dilakukan role user
+ * * berisi controller untuk hal EXTRA yang hanya bisa dilakukan role user
+ *  * routing tetap ada di "user.js"
  * ! -------------------
  */
 

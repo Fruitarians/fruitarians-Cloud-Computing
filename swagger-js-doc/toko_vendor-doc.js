@@ -1,7 +1,7 @@
 // * -------------------------------- Route Doc -------------------------------- * //
 
 // *! GET all toko/vendor data -> just role data tersebut
-// *! code dan routing ada di bagian user
+// *! code dan routing ada di bagian "user.js" dan "userController.js"
 // * GET /user/{role}
 /**
  * @swagger
@@ -109,8 +109,11 @@
 
 
 
+
+
+
 // * USER GET info detail -> misal user akses detail toko/ vendor
-// *! code dan routing ada di bagian user
+// *! code dan routing ada di bagian "user.js" dan "userController.js"
 //* GET /user/info/{userid}
 /**
  * @swagger
@@ -238,7 +241,7 @@
 
 
 // * USER GET detail buah pada salah satu toko
-// *! code dan routing ada di bagian user
+// *! code dan routing ada di bagian "user.js" dan "userController.js"
 // * GET /user/toko/{idToko}/{idBuah}
 /**
  * @swagger
@@ -356,7 +359,8 @@
 
 
 
-//*! GET semua data buah yang ada dari semua toko
+// * GET semua data buah yang ada dari semua toko
+// *! code dan routing ada di bagian "buah.js" dan "buahController.js"
 // * GET /buah/
 /**
  * @swagger

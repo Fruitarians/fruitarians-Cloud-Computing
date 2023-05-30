@@ -222,14 +222,13 @@
 
 
 
-
 // * POST new data buah
 // * POST /user/toko/buah
 /**
  * @swagger
  * /user/toko/buah/:
  *   post:
- *     summary: add new buah data (verif minimal input dilakukan di FE ya(?)) *khusus role toko
+ *     summary: add new buah data *khusus role toko
  *     tags: [Toko]
  *     security:
  *       - bearerAuth: []
@@ -329,7 +328,7 @@
  * @swagger
  * /user/toko/buah/:
  *   patch:
- *     summary: edit buah data *khusus role toko (verif minimal input dilakukan di FE ya(?))
+ *     summary: edit buah data *khusus role toko
  *     tags: [Toko]
  *     security:
  *       - bearerAuth: []
@@ -419,6 +418,7 @@
  *                 message:
  *                   type: string
  */
+
 
 
 

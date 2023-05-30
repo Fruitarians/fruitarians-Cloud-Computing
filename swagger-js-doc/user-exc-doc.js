@@ -1,14 +1,18 @@
 // * -------------------------------- Route Doc -------------------------------- * //
 /**
- * ! catatan --------------------
- * ! merupakan routes untuk endpoint role USER untuk kemampuan khusus dari role USER
- * ? file routes ada di 'user'
- * ! ---------------------------
+ * * -------------------- catatan --------------------
+ * * merupakan routes untuk endpoint role USER untuk kemampuan khusus dari role USER
+ * ? file routes ada di 'user.js'
+ * ? file controller ada di 'userRoleController.js'
+ * * ---------------------------
  */
 
 
-// *! GET semua data bookmark yang disimpan oleh satu user yang sudah login
-// *! GET /user/bookmark
+
+
+
+// * GET semua data bookmark yang disimpan oleh satu user yang sudah login
+// * GET /user/bookmark
 /**
  * @swagger
  * /user/bookmark:
@@ -90,8 +94,8 @@
 
 
 
-// *! POST satu data untuk dmasukan ke bookmark user array
-// *! POST /user/bookmark
+// * POST satu data untuk dmasukan ke bookmark user array
+// * POST /user/bookmark
 /**
  * @swagger
  * /user/bookmark:
@@ -152,8 +156,8 @@
 
 
 
-// *! DELETE satu data dari daftar bookmark user
-// *! DELETE /user/bookmark
+// * DELETE satu data dari daftar bookmark user
+// * DELETE /user/bookmark
 /**
  * @swagger
  * /user/bookmark:

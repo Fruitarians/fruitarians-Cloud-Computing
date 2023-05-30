@@ -145,8 +145,7 @@ exports.getAllBuah = async (req, res, next) => {
 
 
 
-
-
+//*! INPUT MULTIPART-FORM
 exports.createBuah = async (req, res, next) => {
     try {
         const user = (await db.collection('users').doc(req.userId).get()).data()
@@ -237,6 +236,8 @@ exports.createBuah = async (req, res, next) => {
 
 
 
+
+//*! INPUT MULTIPART-FORM
 exports.editBuah = async (req, res, next) => {
     try {
         const user = (await db.collection('users').doc(req.userId).get()).data()
@@ -340,7 +341,6 @@ exports.deleteBuah = async (req, res, next) => {
             throw err
         }
 
-
         const buahHapus = (await db.collection('buah').doc(req.body.buahId).get()).data()
         if(!buahHapus || buahHapus.creator.toString() !== req.userId){
             const err = new Error('Not Authorized User')
@@ -375,7 +375,7 @@ exports.deleteBuah = async (req, res, next) => {
         }
 
         const deletedBuahId = user.buah.filter((value) => value !== req.body.buahId);
-        //*! update user UpdatedaT -> menambahkan buah
+        //*! update user UpdatedAt -> menambahkan buah
         user.updatedAt = new Date()
         await db.collection('users').doc(req.userId).update({
             buah: deletedBuahId

@@ -13,7 +13,8 @@ const db = require('../database/db')
 
 // * ------------------------------- route ------------------------------- * //
 
-// * GET
+
+// *? ------------------------------- CONNECTION CHECK ------------------------------- * //
 router.get('/', (req, res, next) => {
     res.status(200).json({
         message : "Success Connect"
@@ -43,24 +44,16 @@ router.get('/user', isAuth, async (req, res, next) => {
 
 
 
-// * ------------------------------- FITUR UTAMA ------------------------------- * //
-
-// * POST
-router.post('/login'
-    // , [
-    // body('email', 'Gunakan format email yang sesuai!')
-    //     .isEmail()
-    //     .normalizeEmail()]
-    , loginReqLimiter, localLimiter, authController.login)
 
 
+// * ------------------------------- MAIN ROUTING------------------------------- * //
 
+
+router.post('/login', loginReqLimiter, localLimiter, authController.login)
 
 
 router.post('/signup',[
     body('email')
-        // .isEmail()
-        // .normalizeEmail()
         .custom((value, {req}) => {
             return (async () => {
                 const user = await db.collection('users').where('email', '==', value).limit(1).get()
@@ -75,26 +68,12 @@ router.post('/signup',[
             minUppercase: 1,
             minSymbols:0,
             minNumbers : 1
-        }),
-    // body('password_konfir')
-    //     .custom((value, {req}) => {
-    //         if(value !== req.body.password) {
-    //             throw new Error('Password konfirmasi tidak sesuai')
-    //         }
-    //         return true
-    //     }),
-    // body('name')
-    //     //.isAlphanumeric().withMessage("Nama harus berupa huruf/string!")
-    //     .isLength({min : 4}).withMessage('Nama minimal mengandung 4 karakter')
-    //     .trim()
-    //     .not()
-    //     .isEmpty()
-], authController.signup)
-
-
+        }), ], authController.signup)
 
 
 router.post('/logout', isAuth,  authController.logout)
+
+
 
 
 module.exports = router

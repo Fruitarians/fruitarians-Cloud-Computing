@@ -1,3 +1,13 @@
+//*! catatan struktur di bawah
+// *? properti lain akan ditambahkan saat proses signup tergantung role
+/**
+ * deskripsi
+ * jam_operasional
+ * createdAt
+ * buah : [] -> khusus toko
+ */
+
+
 class userSchema {
     constructor(email, password, name, role, alamat, telepon){
         this.email = email
@@ -19,13 +29,5 @@ class userSchema {
 module.exports = userSchema
 
 
-//*? catatan struktur di atas
-// *? properti lain akan ditambahkan saat proses signup tergantung role
-/**
- * deskripsi
- * jam_operasional
- * createdAt
- * buah : [] -> khusus toko
- */
 
 

@@ -74,6 +74,7 @@ exports.uploadFile = async (req, res, next) => {
 
 
 
+
 exports.deleteItem = async (req, res, next) => {
     try{
 
@@ -101,9 +102,7 @@ exports.deleteItem = async (req, res, next) => {
 
 
 
-
-
-
+//*! --------- VERSI ORI DARI UPLOAD FILE ---------
 exports.uploadFileOri = async (req, res, next) => {
     try {
         console.log(req.body)

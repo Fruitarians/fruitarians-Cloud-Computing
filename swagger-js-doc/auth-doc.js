@@ -132,7 +132,7 @@
  * @swagger
  * /auth/signup:
  *   post:
- *     summary: create new user account
+ *     summary: buah user account baru
  *     tags: [Auth]
  *     requestBody:
  *       required: true
@@ -214,7 +214,7 @@
  * @swagger
  * /auth/logout:
  *   post:
- *     summary: Logout user access
+ *     summary: logout user access dan buat token access tidak valid
  *     security:
  *       - bearerAuth: []
  *     tags: [Auth]
@@ -256,50 +256,3 @@
  *                   type: string
  *
  */
-
-
-
-
-
-
-
-// * /auth/refresh
-// /**
-//  * @swagger
-//  * /auth/refresh:
-//  *   post:
-//  *     summary: get new access token with refresh token
-//  *     tags: [Auth]
-//  *     requestBody:
-//  *       required: true
-//  *       content:
-//  *         application/json:
-//  *           schema:
-//  *             type: object
-//  *             properties:
-//  *               refresh_token:
-//  *                 type: string
-//  *
-//  *     responses:
-//  *       '200':
-//  *         description: a JSON Array User login Information
-//  *         content:
-//  *           application/json:
-//  *             schema:
-//  *               type: object
-//  *               properties:
-//  *                 accessToken:
-//  *                   type: string
-//  *                 expiresIn:
-//  *                   type: integer
-//  *                   example: 3600
-//  *                 token_type:
-//  *                   example: Bearer
-//  *                 email:
-//  *                   type: string
-//  *
-//  *       '401':
-//  *         description: Refresh Token tidak Valid!
-//  *       '500':
-//  *         description: Internal Error
-//  */

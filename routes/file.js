@@ -3,7 +3,7 @@ const router = require('express').Router()
 const fileController = require('../controllers/fileController')
 const isAuth = require('../middleware/is-auth')
 
-/// * ------------------------------- route ------------------------------- * //
+// * ------------------------------- route ------------------------------- * //
 
 router.get('/',  fileController.readFile)
 

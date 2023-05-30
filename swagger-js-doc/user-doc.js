@@ -94,6 +94,8 @@
 
 
 
+
+
 //* PATCH /user/info
 /**
  * @swagger
@@ -229,16 +231,12 @@
 
 
 
-// * --------------- POST POST POST
-
-// * --------------- PATCH PATCH PATCH
-
 //* PATCH /user/password
 /**
  * @swagger
  * /user/password:
  *   patch:
- *     summary: change user password with auth header
+ *     summary: ubah password user dengan sudah login
  *     tags: [User]
  *     security:
  *       - bearerAuth: []
@@ -294,12 +292,13 @@
 
 
 
+
 //* GET /user/forget_password
 /**
  * @swagger
  * /user/forget_password:
  *   post:
- *     summary: get token for auth for change password if user forget password
+ *     summary: dapatkan token autentikasi untuk akses perubahan password lewat forget password
  *     tags: [User]
  *     requestBody:
  *       required: true
@@ -371,7 +370,7 @@
  * @swagger
  * /user/forget_password:
  *   patch:
- *     summary: change password from forget password with token auth
+ *     summary: ubah password dari forget password dengan token
  *     tags: [User]
  *     requestBody:
  *        required: true
@@ -431,128 +430,3 @@
  *                   type: string
  *
  */
-
-
-
-
-
-
-
-
-
-
-// * --------------- DELETE DELETE DDELETE
-
-// * delete 2 flow endpoint
-
-// * GET /user/delete
-// /**
-//  * @swagger
-//  * /user/delete:
-//  *   get:
-//  *     summary: get token for delete account
-//  *     tags: [User]
-//  *     security:
-//  *       - bearerAuth: []
-//  *
-//  *     responses:
-//  *       '200':
-//  *         description: get delete token for delete user
-//  *         content:
-//  *           application/json:
-//  *             schema:
-//  *               type: object
-//  *               properties:
-//  *                 deleteUserToken:
-//  *                   type: string
-//  *                 userId:
-//  *                   type: string
-//  *                 email:
-//  *                   type: string
-//  *
-//  *       '401':
-//  *         description: not authorized user
-//  *       '500':
-//  *         description: internal server error
-//  *
-//  */
-
-// * DELETE /user/delete
-// /**
-//  * @swagger
-//  * /user/delete:
-//  *   delete:
-//  *     summary: verifikasi delete token and delete user
-//  *     tags: [User]
-//  *     security:
-//  *       - bearerAuth: []
-//  *     requestBody:
-//  *       required: true
-//  *       content:
-//  *         application/json:
-//  *           schema:
-//  *             type: object
-//  *             properties:
-//  *               deleteToken:
-//  *                 type: string
-//  *
-//  *     responses:
-//  *       '200':
-//  *         description: success delete user
-//  *         content:
-//  *           application/json:
-//  *             schema:
-//  *               type: object
-//  *               properties:
-//  *                 message:
-//  *                   example: Success delete user
-//  *                 user_deleted:
-//  *                   type: object
-//  *                   properties:
-//  *                     id:
-//  *                       type: string
-//  *                     email:
-//  *                       type: string
-//  *       '401':
-//  *         description: not authorized user
-//  *       '500':
-//  *         description: internal server error
-//  *
-//  */
-
-
-// * delete 1 flow endpoint
-
-// * DELETE /user/delete2
-// /**
-//  * @swagger
-//  * /user/delete2:
-//  *   delete:
-//  *     summary: verifikasi delete token and delete user
-//  *     tags: [User]
-//  *     security:
-//  *       - bearerAuth: []
-//  *
-//  *     responses:
-//  *       '200':
-//  *         description: success delete user
-//  *         content:
-//  *           application/json:
-//  *             schema:
-//  *               type: object
-//  *               properties:
-//  *                 message:
-//  *                   example: Success delete user
-//  *                 user_deleted:
-//  *                   type: object
-//  *                   properties:
-//  *                     id:
-//  *                       type: string
-//  *                     email:
-//  *                       type: string
-//  *       '401':
-//  *         description: not authorized user
-//  *       '500':
-//  *         description: internal server error
-//  *
-//  */

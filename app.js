@@ -9,9 +9,6 @@ const swaggerUI = require('swagger-ui-express')
 const swaggerJSDoc = require('swagger-jsdoc')
 // * monitor & logging
 const expressStatusMonitor = require('express-status-monitor')
-//*! morgan ngga dipake -> dipake error gabisa deploy app engine dan belum bisa atasinnya
-// const morganMonitor = require('morgan')
-// const rotating_file_stream = require('rotating-file-stream')
 // * global rate limiter
 const globalRateLimiter = require('./middleware/rate-limiter').globalLimiter
 
@@ -25,6 +22,8 @@ const userRoutes = require('./routes/user')
 const tokoRoutes = require('./routes/toko')
 const fileRoutes = require('./routes/file')
 const buahRoutes = require('./routes/buah')
+
+//const lokasiRoutes = require('./routes/lokasi')
 
 //* ------------------------------- app config ------------------------------- *//
 
@@ -88,7 +87,6 @@ app.use( helmet({
 app.use(globalRateLimiter)
 
 app.use(expressStatusMonitor())
-// app.use(morganMonitor('combined', {stream : accessLogStream}))
 
 
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerSpecs))
@@ -98,6 +96,8 @@ app.use('/user/toko', tokoRoutes)
 app.use('/user', userRoutes)
 app.use('/file', fileRoutes)
 app.use('/buah', buahRoutes)
+
+//app.use(lokasiRoutes)
 
 //* global errorHandling
 app.use((error, req, res, next) => {

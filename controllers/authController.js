@@ -12,73 +12,6 @@ const db = require('../database/db')
 
 //* -------------------------- controller -------------------------- *//
 
-exports.signup = async (req, res, next) => {
-    try {
-        const errors = validationResult(req)
-        if(!errors.isEmpty()){
-            const err = new Error('The Password Format is Incorrect / Email is Already in Use.')
-            err.statusCode = statusCode['401_unauthorized']
-            throw err
-        }
-
-        const email = req.body.email
-        const password = req.body.password
-        const name = req.body.name
-        const role = req.body.role
-
-        const negara = req.body.negara
-        const kota = req.body.kota
-        const deskripsi_alamat = req.body.deskripsi_alamat
-        const alamat = {
-            negara: negara,
-            kota: kota,
-            deskripsi_alamat : deskripsi_alamat
-        }
-        let telepon = req.body.telepon
-
-        if(telepon.startsWith("0")) {
-            telepon = telepon.slice(1)
-        }
-
-        const hashPassword = await bcrypt.hash(password, 12)
-        const user = new User(
-            email, hashPassword, name, role, alamat, telepon
-        )
-        const newUser = {...user}
-
-        if (role !== 'user'){
-            // *! createdAt sudah otomatis dibuat oleh objek dan dibuat untuk semua role user dan sekalian juga akan ada field updatedAT
-
-            newUser.jam_operasional = null
-            newUser.deskripsi = null
-
-            if(role === 'toko'){
-                newUser.buah = []
-            }
-        } else{
-            //*! tambahan dengan adanya bookmark maka ketika dibuat akan buat array kosong
-            newUser.bookmark = []
-        }
-
-        await db.collection('users').doc().set(newUser)
-
-        res.status(statusCode['200_ok']).json({
-            errors: false,
-            message : "User Success Created"
-        })
-
-    } catch (e) {
-        if(!e.statusCode) {
-            e.statusCode = statusCode['500_internal_server_error']
-        }
-        next(e)
-    }
-}
-
-
-
-
-
 exports.login = async (req, res, next) => {
     const email = req.body.email
     const password = req.body.password
@@ -140,7 +73,71 @@ exports.login = async (req, res, next) => {
         }
         next(e)
     }
+}
 
+
+
+
+
+exports.signup = async (req, res, next) => {
+    try {
+        const errors = validationResult(req)
+        if(!errors.isEmpty()){
+            const err = new Error('The Password Format is Incorrect / Email is Already in Use.')
+            err.statusCode = statusCode['401_unauthorized']
+            throw err
+        }
+
+        const email = req.body.email
+        const password = req.body.password
+        const name = req.body.name
+        const role = req.body.role
+
+        const negara = req.body.negara
+        const kota = req.body.kota
+        const deskripsi_alamat = req.body.deskripsi_alamat
+        const alamat = {
+            negara: negara,
+            kota: kota,
+            deskripsi_alamat : deskripsi_alamat
+        }
+        let telepon = req.body.telepon
+
+        if(telepon.startsWith("0")) {
+            telepon = telepon.slice(1)
+        }
+
+        const hashPassword = await bcrypt.hash(password, 12)
+        const user = new User(
+            email, hashPassword, name, role, alamat, telepon
+        )
+        const newUser = {...user}
+
+        if (role !== 'user'){
+            newUser.jam_operasional = null
+            newUser.deskripsi = null
+
+            if(role === 'toko'){
+                newUser.buah = []
+            }
+        } else{
+            //*! tambahan dengan adanya bookmark maka ketika dibuat akan buat array kosong
+            newUser.bookmark = []
+        }
+
+        await db.collection('users').doc().set(newUser)
+
+        res.status(statusCode['200_ok']).json({
+            errors: false,
+            message : "User Success Created"
+        })
+
+    } catch (e) {
+        if(!e.statusCode) {
+            e.statusCode = statusCode['500_internal_server_error']
+        }
+        next(e)
+    }
 }
 
 
