@@ -258,7 +258,6 @@ exports.editBuah = async (req, res, next) => {
         const newHarga = req.body.harga
         const newSatuan = req.body.satuan
         const newDeskripsi = req.body.deskripsi
-        //const newGambar = req.body.gambar
         //* tambah stok properti
         const newStok = req.body.stok
 
@@ -278,11 +277,18 @@ exports.editBuah = async (req, res, next) => {
         }
 
         if(req.file){
+            let replace
+            if(buahEdit.gambar){
+                replace = true
+            }
+
             general_response.picture.new_picture = true
             req.editData = {
                 role: 'toko',
                 userId: req.userId,
-                idBuah: req.body.buahId
+                idBuah: req.body.buahId,
+                replace: replace,
+                photo_url: buahEdit.gambar
             }
 
             const editPic = await fileController.uploadFile(req)

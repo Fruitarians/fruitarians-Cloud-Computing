@@ -11,6 +11,7 @@ const db = require('../database/db')
 
 // * CONTROLLER UPLOAD PIC TO CLOUD STORAGE
 const fileController = require('./fileController')
+const repl = require("repl");
 
 
 
@@ -352,9 +353,18 @@ exports.changeInfo = async (req, res, next) => {
 
             // * PROSES EDIT/ADD GAMBAR
             if(req.file){
+                //* disini gunakan check replace karena ada kemungkinan user (toko/vendor) edit data namun tidak ganti gambar (awal set null dan baru bisa ganti ketika sudah masuk apk)
+                let replace
+                if(user.gambar_profil){
+                    replace = true
+                }
+
+               // console.log('iya berubah')
                 req.editData = {
                     role : user.role,
-                    userId: req.userId
+                    userId: req.userId,
+                    replace: replace,
+                    photo_url: user.gambar_profil
                 }
                 const uploadPic = await fileController.uploadFile(req)
 

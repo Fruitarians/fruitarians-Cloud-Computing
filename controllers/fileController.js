@@ -6,22 +6,37 @@ const statusCode = require('../util/response').httpStatus_keyValue
 const storage = new Storage({ keyFilename: './cloud_storage_key.json' })
 const bucket = storage.bucket('test-api-kepston')
 
+const crypto = require('crypto')
+
 
 exports.uploadFile = async (req, res, next) => {
     try {
-        // *! tidak digunakan karena middleware ditaruh di routes
-        //await processFile(req, res)
 
         // * lihat REQ role masuk mana untuk edit foto
         const folderName = req.editData.role
         const roleUserId = req.editData.userId
-        let filename = roleUserId + '.png' //filename = filename.replace(/[^.]+/, roleUserId);
+        let path_name = folderName + '/' + roleUserId + '/'
+        //let filename = roleUserId + '.png' //filename = filename.replace(/[^.]+/, roleUserId);
+        let filename = crypto.randomBytes(4).toString('hex') + '.png'
 
-        let uploadPath = folderName + '/' + roleUserId + '/' + filename
+        let uploadPath = path_name + filename
+
         // *? jika diupload adalah gambar dari buah
         if(req.editData.idBuah) {
-            filename = req.editData.idBuah + '.png'
-            uploadPath = folderName + '/' + roleUserId + '/buah/' + filename
+            //filename = req.editData.idBuah + '.png'
+            uploadPath = path_name + 'buah/' + filename
+
+            path_name = path_name + 'buah/'
+        }
+
+        console.log(req.editData.replace)
+        //* ketika ada gambar maka delete dahulu
+        if(req.editData.replace){
+            const del_pic = req.editData.photo_url.split('/')
+            const name_pic = del_pic[del_pic.length - 1]
+            let delete_path = path_name + name_pic
+
+            await bucket.file(delete_path).delete()
         }
 
         // *? Create a new blob in the bucket and upload the file data.
@@ -45,33 +60,11 @@ exports.uploadFile = async (req, res, next) => {
             publicUrl = format(
                 `https://storage.googleapis.com/${bucket.name}/${blob.name}`
             );
-
-            // try {
-            //     // Make the file public
-            //     await bucket.file(folderName + '/' + roleUserId + '/' + filename).makePublic();
-            //
-            // } catch {
-            //
-            //     return publicUrl
-            //     console.log(publicUrl)
-            //     res.status(200).send({
-            //         message:
-            //             `Uploaded the file successfully: ${req.file.originalname}`,
-            //         url: publicUrl,
-            //     });
-            // }
-
-            // res.status(200).send({
-            //     message: "Uploaded the file successfully: " + req.file.originalname,
-            //     url: publicUrl,
-            // });
-
         });
 
         blobStream.end(req.file.buffer);
 
         return publicUrl
-
 
     } catch (e) {
         return false
