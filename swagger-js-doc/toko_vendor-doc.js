@@ -39,6 +39,8 @@
  *               properties:
  *                 errors:
  *                   example: false
+ *                 message:
+ *                   example: Get Role Data User
  *                 totalData:
  *                   type: integer
  *                 data:
@@ -155,6 +157,8 @@
  *               properties:
  *                 errors:
  *                   example: false
+ *                 message:
+ *                   example: Get Detail User Info
  *                 data:
  *                   type: object
  *                   properties:
@@ -275,6 +279,8 @@
  *               properties:
  *                 errors:
  *                   example: false
+ *                 message:
+ *                   example: Get Detail Buah Data
  *                 toko:
  *                   type: object
  *                   properties:
@@ -388,6 +394,8 @@
  *               properties:
  *                 errors:
  *                   example: false
+ *                 message:
+ *                   example: Get Buah Data
  *                 totalData:
  *                   type: integer
  *                 data:

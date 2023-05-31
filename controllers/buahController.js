@@ -54,6 +54,7 @@ exports.getAllBuah = async (req, res, next) => {
 
         res.status(statusCode['200_ok']).json({
             error: false,
+            message: "Get Buah Data",
             totalData: totalData,
             data: dataBuah
         })

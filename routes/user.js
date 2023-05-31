@@ -51,7 +51,7 @@ router.get('/toko/:idToko/:idBuah', isAuth, userController.detailBuah)
 
 //*! --------------------------------------------------------------------------------------
 
-// * ketika pakai data input form-data (ada upload IMG) -> gunakan processFile untuk process data gambar dan input
+// * ketika pakai data input form-data (ada upload IMG) -> gunakan "processFile" untuk process data gambar dan input
 // *? gunakan processFile
 router.patch('/info',  processFile, isAuth, userController.changeInfo)
 

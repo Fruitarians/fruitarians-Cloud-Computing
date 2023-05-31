@@ -39,6 +39,8 @@
  *               properties:
  *                 errors:
  *                   example: false
+ *                 message:
+ *                   example: Get user bookmark data
  *                 totalData:
  *                   type: integer
  *                 data:

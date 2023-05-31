@@ -22,6 +22,7 @@ const userRoutes = require('./routes/user')
 const tokoRoutes = require('./routes/toko')
 const fileRoutes = require('./routes/file')
 const buahRoutes = require('./routes/buah')
+const articleRoutes = require('./routes/article')
 
 //const lokasiRoutes = require('./routes/lokasi')
 
@@ -96,6 +97,7 @@ app.use('/user/toko', tokoRoutes)
 app.use('/user', userRoutes)
 app.use('/file', fileRoutes)
 app.use('/buah', buahRoutes)
+app.use('/articles', articleRoutes)
 
 //app.use(lokasiRoutes)
 

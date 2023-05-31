@@ -30,6 +30,8 @@
  *               properties:
  *                 errors:
  *                   example: false
+ *                 message:
+ *                   example: Get Detail Buah Data
  *                 toko:
  *                   type: object
  *                   properties:
@@ -134,6 +136,8 @@
  *               properties:
  *                 errors:
  *                   example: false
+ *                 message:
+ *                   example: Get Buah Data
  *                 toko:
  *                   type: object
  *                   properties:
@@ -365,6 +369,8 @@
  *               properties:
  *                 errors:
  *                   example: false
+ *                 message:
+ *                   example: Success Edit Buah Data
  *                 picture:
  *                   type: object
  *                   properties:

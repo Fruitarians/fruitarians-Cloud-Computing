@@ -39,6 +39,7 @@ exports.detailBuah = async (req, res, next) => {
 
         res.status(statusCode['200_ok']).json({
             errors: false,
+            message: 'Get Detail Buah Data',
             toko: {
                 name: user.name,
                 email: user.email,
@@ -95,8 +96,8 @@ exports.getAllBuah = async (req, res, next) => {
                 gambar: data.gambar,
                 satuan: data.satuan
             }
-            buahdata.harga = parseInt(buahdata.harga)
-            buahdata.stok = parseInt(buahdata.stok)
+            buahdata.harga = parseInt(data.harga)
+            buahdata.stok = parseInt(data.stok)
             dataBuah.push(buahdata)
         })
 
@@ -117,6 +118,7 @@ exports.getAllBuah = async (req, res, next) => {
 
         res.status(statusCode['200_ok']).json({
             errors: false,
+            message: 'Get Buah Data',
             toko: {
                 id: req.userId,
                 name: user.name,
@@ -271,6 +273,7 @@ exports.editBuah = async (req, res, next) => {
 
         const general_response = {
             errors: false,
+            message: 'Success Edit Buah Data',
             picture: {
                 new_picture: false,
                 success_upload: false

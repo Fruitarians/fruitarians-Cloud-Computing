@@ -53,6 +53,7 @@ exports.getAllBookmark = async (req, res, next) => {
 
         res.status(statusCode['200_ok']).json({
             errors: false,
+            message: 'Get user bookmark data',
             totalData: totalData,
             data: dataBookmark
         })

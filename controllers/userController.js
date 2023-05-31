@@ -87,6 +87,7 @@ exports.getAllRole = async (req, res, next) => {
 
         res.status(statusCode['200_ok']).json({
             errors: false,
+            message: "Get Role User Data",
             totalData: totalData,
             data : allData
         })
@@ -176,6 +177,7 @@ exports.detailInfo = async (req, res, next) => {
 
         res.status(statusCode['200_ok']).json({
             errors: false,
+            message: "Get Detail User Info",
             data : infoData
         })
 
@@ -223,6 +225,7 @@ exports.detailBuah = async (req, res, next) => {
 
         res.status(statusCode['200_ok']).json({
             errors: false,
+            message:"Get Detail Buah Data",
             toko: {
                 name: user.name,
                 telepon: user.telepon,
