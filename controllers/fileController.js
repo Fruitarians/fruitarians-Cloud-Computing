@@ -80,12 +80,13 @@ exports.deleteItem = async (req, res, next) => {
 
         const folderName = req.editData.role
         const roleUserId = req.editData.userId
-        let filename = roleUserId + '.png' //filename = filename.replace(/[^.]+/, roleUserId);
+        let del_pic =  req.editData.photo_url.split('/') //roleUserId + '.png' //filename = filename.replace(/[^.]+/, roleUserId);
+        const filename = del_pic[del_pic.length - 1]
 
         let uploadPath = folderName + '/' + roleUserId + '/' + filename
         // *? jika diupload adalah gambar dari buah
         if(req.editData.idBuah) {
-            filename = req.editData.idBuah + '.png'
+            //filename = req.editData.idBuah + '.png'
             uploadPath = folderName + '/' + roleUserId + '/buah/' + filename
         }
 

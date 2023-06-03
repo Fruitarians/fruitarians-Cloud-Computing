@@ -24,7 +24,7 @@ router.post('/buah', processFile, isAuth, tokoController.createBuah)
 // *? gunakan processFile -> input multipart
 router.patch('/buah', processFile, isAuth, tokoController.editBuah)
 
-router.delete('/buah', isAuth, tokoController.deleteBuah)
+router.delete('/buah/:idBuah', isAuth, tokoController.deleteBuah)
 
 
 

@@ -433,21 +433,19 @@
 // * DELETE /user/toko/buah
 /**
  * @swagger
- * /user/toko/buah/:
+ * /user/toko/buah/{idBuah}:
  *   delete:
  *     summary: delete data buah *khusus role toko
  *     tags: [Toko]
  *     security:
  *       - bearerAuth: []
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               buahId:
- *                 type: string
+ *     parameters:
+ *       - name: idBuah
+ *         in: path
+ *         required: true
+ *         description: id buah yang ingin dihapus
+ *         schema:
+ *           type: string
  *
  *     responses:
  *       '200':

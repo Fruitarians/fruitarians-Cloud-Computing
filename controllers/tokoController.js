@@ -343,15 +343,15 @@ exports.deleteBuah = async (req, res, next) => {
             err.statusCode = statusCode['401']
             throw err
         }
-
-        const buahHapus = (await db.collection('buah').doc(req.body.buahId).get()).data()
+        console.log(req.params.idBuah)
+        const buahHapus = (await db.collection('buah').doc(req.params.idBuah).get()).data()
         if(!buahHapus || buahHapus.creator.toString() !== req.userId){
             const err = new Error('Not Authorized User')
             err.statusCode = statusCode['401']
             throw err
         }
 
-        await db.collection('buah').doc(req.body.buahId).delete()
+        await db.collection('buah').doc(req.params.idBuah).delete()
 
         const general_response = {
             errors: false,
@@ -368,7 +368,8 @@ exports.deleteBuah = async (req, res, next) => {
             req.editData = {
                 role: 'toko',
                 userId: req.userId,
-                idBuah: req.body.buahId
+                idBuah: req.params.idBuah,
+                photo_url: buahHapus.gambar
             }
 
             const hapusGambar = await fileController.deleteItem(req)
@@ -377,7 +378,7 @@ exports.deleteBuah = async (req, res, next) => {
             }
         }
 
-        const deletedBuahId = user.buah.filter((value) => value !== req.body.buahId);
+        const deletedBuahId = user.buah.filter((value) => value !== req.params.idBuah);
         //*! update user UpdatedAt -> menambahkan buah
         user.updatedAt = new Date()
         await db.collection('users').doc(req.userId).update({
