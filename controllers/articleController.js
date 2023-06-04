@@ -19,8 +19,6 @@ const formatDate = (dateInput) => {
 
 exports.getArticles = async (req, res, next) => {
     try {
-        const { page = 1, size = 10 } = req.query;
-
         const articles = await db.collection("artikels").get();
 
         const result = [];
@@ -40,19 +38,10 @@ exports.getArticles = async (req, res, next) => {
             });
         }
 
-        /* -------------------------- configure pagination -------------------------- */
-        const currentPage = parseInt(page);
-        const perPage = parseInt(size);
-        const startData = (currentPage - 1) * perPage;
-
-        const finalData = result.slice(startData, startData + perPage);
-
-        res
-            .status(statusCode["200_ok"])
-            .json({ 
-                data: finalData, 
-                totalData: finalData.length,
-                message: "Retrieve all the article data" });
+        res.status(statusCode["200_ok"]).json({ result, 
+            totalData: result.length, 
+            message: "Retrive all data article" 
+        });
     } catch (e) {
         if (!e.statusCode) {
             e.statusCode = statusCode["500_internal_server_error"];
@@ -74,38 +63,39 @@ exports.getArticlesById = async (req, res, next) => {
         if (articles.size > 0) {
             const { docs } = articles;
             docs.map((_doc) => {
-            const data = _doc.data();
-            Object.assign(result, {
-                id: data.id,
-                title: data.title,
-                konten: data.konten,
-                author: data.author,
-                photo: data.photo,
-                createdAt: formatDate(data.createdAt),
-            });
+                const data = _doc.data();
+                Object.assign(result, {
+                    id: data.id,
+                    title: data.title,
+                    konten: data.konten,
+                    author: data.author,
+                    photo: data.photo,
+                    createdAt: formatDate(data.createdAt),
+                });
             });
 
             let randomItem = undefined;
             if (card) {
-            const articles = await db.collection("artikels").get();
-            let randomIndex = Math.floor(Math.random() * articles.size);
+                const articles = await db.collection("artikels").get();
+                let randomIndex = Math.floor(Math.random() * articles.size);
 
-            // avoiding random card same with details item
-            while (true) {
-                randomIndex = Math.floor(Math.random() * articles.size);
-                if (parseInt(id) !== randomIndex && randomIndex !== 0) break;
-            }
+                // avoiding random card same with details item
+                while (true) {
+                    randomIndex = Math.floor(Math.random() * articles.size);
+                    if (parseInt(id) !== randomIndex && randomIndex !== 0) break;
+                }
 
-            const item = articles.docs[randomIndex].data();
-            randomItem = Object.assign(item, {
-                ...item,
-                createdAt: formatDate(item.createdAt),
-            });
+                const item = articles.docs[randomIndex].data();
+                randomItem = Object.assign(item, {
+                    ...item,
+                    createdAt: formatDate(item.createdAt),
+                });
             }
 
             res.status(statusCode["200_ok"]).json({ 
                 data: result, randomItem,
-                message: "Get data articles by id" });
+                message: "Get data article random" 
+            });
         } else {
             throw new TypeError("id not found");
         }

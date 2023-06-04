@@ -7,13 +7,6 @@
  *   get:
  *     summary: ambil semua data articles
  *     tags: [Article]
- *     parameters:
- *       - name: page
- *         in: query
- *         description: akan tampilkan halaman data ke berapa, kosong/default akan tampilkan halaman 1
- *       - name: size
- *         in: query
- *         description: dalam satu halaman akan ada berapa data, default/kosong akan tampilkan 10 data
  *
  *     responses:
  *       '200':
@@ -84,7 +77,7 @@
  *                 errors:
  *                   example: false
  *                 message:
- *                   example: Succes get data article by id
+ *                   example: Succes get random data article
  *                 data:
  *                     type: object
  *                     properties:
