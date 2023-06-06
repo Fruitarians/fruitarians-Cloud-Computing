@@ -22,6 +22,14 @@ exports.getAllBuah = async (req, res, next) => {
             throw err
         }
 
+        //* searching query
+        let q
+        if(req.query.search){
+            //* gunakan if disini untuk pastikan bahawa query diisi, karena jika tidak diisi "undefined"
+            //* maka tidak bisa lakukan .trim()
+            q = (req.query.search).toString().trim().toLowerCase()
+        }
+
         const allBuah = (await db.collection('buah').get())
         let dataBuah = []
         allBuah.forEach(doc => {
@@ -39,7 +47,15 @@ exports.getAllBuah = async (req, res, next) => {
                 gambar: buahData.gambar,
                 creator: buahData.creator
             }
-            dataBuah.push(buah)
+
+            if(q){
+                if(buah.name.toLowerCase().includes(q)){
+                    dataBuah.push(buah)
+                }
+            } else {
+                dataBuah.push(buah)
+            }
+
         })
 
 

@@ -1,4 +1,4 @@
-// * -------------------------------- Route Doc -------------------------------- * //
+// * -------------------------------- TOKO VENDOR DOC -------------------------------- * //
 
 // *! GET all toko/vendor data -> just role data tersebut
 // *! code dan routing ada di bagian "user.js" dan "userController.js"
@@ -383,6 +383,9 @@
  *       - name: size
  *         in: query
  *         description: berapa data ditampilkan dalam 1 halaman, ketika kosong akan set default tampilkan 3 data tiap halaman
+ *       - name: search
+ *         in: query
+ *         description: search data buah berdasarkan nama buah sesuai dengan query search
  *
  *     responses:
  *       '200':

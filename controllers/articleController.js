@@ -38,9 +38,10 @@ exports.getArticles = async (req, res, next) => {
             });
         }
 
-        res.status(statusCode["200_ok"]).json({ result, 
-            totalData: result.length, 
-            message: "Retrive all data article" 
+        res.status(statusCode["200_ok"]).json({
+            message: "Retrieve all data article",
+            totalData: result.length,
+            result
         });
     } catch (e) {
         if (!e.statusCode) {
@@ -92,12 +93,12 @@ exports.getArticlesById = async (req, res, next) => {
                 });
             }
 
-            res.status(statusCode["200_ok"]).json({ 
-                data: result, randomItem,
-                message: "Get data article random" 
+            res.status(statusCode["200_ok"]).json({
+                message: "Get data article random",
+                data: result, randomItem
             });
         } else {
-            throw new TypeError("id not found");
+            throw new TypeError("Id Not Found");
         }
     } catch (e) {
         if (!e.statusCode) {

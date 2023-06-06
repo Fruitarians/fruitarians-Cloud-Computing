@@ -327,6 +327,13 @@
 /**
  * @swagger
  * tags:
+ *   name: Vendor
+ *   description: Proses tambahan dari user role vendor
+ */
+
+/**
+ * @swagger
+ * tags:
  *   name: Toko / Vendor / Umum
  *   description: proses berhubungan bisa salah satu atau berkaitan dengan kedua role toko/ vendor (lebih ke proses misal user akses menu daftar toko / vendor)
  */

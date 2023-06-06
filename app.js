@@ -23,6 +23,7 @@ const tokoRoutes = require('./routes/toko')
 const fileRoutes = require('./routes/file')
 const buahRoutes = require('./routes/buah')
 const articleRoutes = require('./routes/article')
+const vendorSubs = require('./routes/vendor')
 
 //const lokasiRoutes = require('./routes/lokasi')
 
@@ -98,6 +99,7 @@ app.use('/user', userRoutes)
 app.use('/file', fileRoutes)
 app.use('/buah', buahRoutes)
 app.use('/articles', articleRoutes)
+app.use('/vendor', vendorSubs)
 
 //app.use(lokasiRoutes)
 

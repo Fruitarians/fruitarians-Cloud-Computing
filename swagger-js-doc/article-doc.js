@@ -16,13 +16,11 @@
  *             schema:
  *               type: object
  *               properties:
- *                 errors:
- *                   example: false
  *                 message:
- *                   example: Succes get all data article
+ *                   example: Retrieve all data article
  *                 totalData:
  *                   type: integer
- *                 data:
+ *                 result:
  *                   type: array
  *                   items:
  *                     type: object
@@ -52,33 +50,78 @@
  *                   type: string
  */
 
+
+
+
+
 // * GET semua article by id
 // *! code dan routing ada di bagian "article.js" dan "articleController.js"
 // * GET /articles/:id
 /**
  * @swagger
- * /articles/:id:
+ * /articles/{id}:
  *   get:
- *     summary: ambil articles by id
+ *     summary: ambil articles by id, dengan option query untuk bisa dapatkan tambahan satu data random
  *     tags: [Article]
  *     parameters:
  *       - name: card
  *         in: query
  *         description: isi nilai dengan boolean true untuk dapatkan 1 data cards random
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         description: id artikel
  *
  *     responses:
- *       '200':
+ *       '200_without_random_data':
  *         description: success get data
  *         content:
  *           application/json:
  *             schema:
  *               type: object
  *               properties:
- *                 errors:
- *                   example: false
  *                 message:
- *                   example: Succes get random data article
+ *                   example: Get data article random
  *                 data:
+ *                     type: object
+ *                     properties:
+ *                       id:
+ *                         type: string
+ *                       title:
+ *                         type: string
+ *                       konten:
+ *                         type: string
+ *                       photo:
+ *                         type: string
+ *                       author:
+ *                         type: string
+ *                       createdAt:
+ *                         type: string
+ *       '200_with_random_data':
+ *         description: success get data
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   example: Get data article random
+ *                 data:
+ *                     type: object
+ *                     properties:
+ *                       id:
+ *                         type: string
+ *                       title:
+ *                         type: string
+ *                       konten:
+ *                         type: string
+ *                       photo:
+ *                         type: string
+ *                       author:
+ *                         type: string
+ *                       createdAt:
+ *                         type: string
+ *                 randomItem:
  *                     type: object
  *                     properties:
  *                       id:
