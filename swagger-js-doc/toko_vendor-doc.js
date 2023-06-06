@@ -385,7 +385,7 @@
  *         description: berapa data ditampilkan dalam 1 halaman, ketika kosong akan set default tampilkan 3 data tiap halaman
  *       - name: search
  *         in: query
- *         description: search data buah berdasarkan nama buah sesuai dengan query search
+ *         description: search data buah berdasarkan nama buah sesuai dengan query search, jika gunakan search maka pagination menjadi tidak aktif
  *
  *     responses:
  *       '200':
@@ -398,7 +398,7 @@
  *                 errors:
  *                   example: false
  *                 message:
- *                   example: Get Buah Data
+ *                   tyoe: string
  *                 totalData:
  *                   type: integer
  *                 data:

@@ -59,6 +59,17 @@ exports.getAllBuah = async (req, res, next) => {
         })
 
 
+        if(q){
+
+            return res.status(statusCode['200_ok']).json({
+                errors: false,
+                message: 'Search Get Buah Data',
+                totalData: dataBuah.length,
+                data: dataBuah
+            })
+
+        }
+
         // *! pagination configuration
         const totalData = dataBuah.length
         const currentPage = parseInt(req.query.page) || 1
