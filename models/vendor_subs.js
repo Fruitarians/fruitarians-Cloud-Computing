@@ -1,8 +1,9 @@
 class vendorSubs {
-    constructor(name, owner, telepon, category, schedule, deskripsi, creator){
+    constructor(name, owner, telepon, alamat, category, schedule, deskripsi, creator){
         this.name = name
         this.owner = owner
         this.telepon = telepon
+        this.alamat = alamat
         this.category = category
         this.schedule = schedule
         this.deskripsi = deskripsi

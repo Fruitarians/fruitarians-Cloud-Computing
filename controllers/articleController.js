@@ -19,12 +19,12 @@ const formatDate = (dateInput) => {
 
 exports.getArticles = async (req, res, next) => {
     try {
-        const user = (await db.collection("users").doc(req.userId).get()).data();
-        if (!user || user.role !== "user") {
-            const err = new Error("User Not Authorized");
-            err.statusCode = statusCode["401_unauthorized"];
-            throw err;
-        }
+        // const user = (await db.collection("users").doc(req.userId).get()).data();
+        // if (!user || user.role !== "user") {
+        //     const err = new Error("User Not Authorized");
+        //     err.statusCode = statusCode["401_unauthorized"];
+        //     throw err;
+        // }
 
         const articles = await db.collection("artikels").get();
 
@@ -60,12 +60,12 @@ exports.getArticles = async (req, res, next) => {
 
 exports.getArticlesById = async (req, res, next) => {
     try {
-        const user = (await db.collection("users").doc(req.userId).get()).data();
-        if (!user || user.role !== "user") {
-            const err = new Error("User Not Authorized");
-            err.statusCode = statusCode["401_unauthorized"];
-            throw err;
-        }
+        //const user = (await db.collection("users").doc(req.userId).get()).data();
+        // if (!user || user.role !== "user") {
+        //     const err = new Error("User Not Authorized");
+        //     err.statusCode = statusCode["401_unauthorized"];
+        //     throw err;
+        // }
 
         const { card = false } = req.query;
         const { id } = req.params;
@@ -109,7 +109,7 @@ exports.getArticlesById = async (req, res, next) => {
 
             res.status(statusCode["200_ok"]).json({
                 message: "Get data article random",
-                data: result, 
+                data: result,
                 randomItem,
             });
         } else {

@@ -37,18 +37,6 @@
  *                         type: string
  *                       createdAt:
  *                         type: string
- *       '401':
- *         description: not authorized
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 errors:
- *                   example: true
- *                 message:
- *                   type: string
- *                   example: User Not Authorize
  *       '500':
  *         description: Internal Server Error
  *         content:
@@ -144,7 +132,7 @@
  *                         type: string
  *                       createdAt:
  *                         type: string
- *       '401':
+ *       '404':
  *         description: not found
  *         content:
  *           application/json:
@@ -156,18 +144,6 @@
  *                 message:
  *                   type: string
  *                   example: ID Not Found
- *       '401':
- *         description: not authorized
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 errors:
- *                   example: true
- *                 message:
- *                   type: string
- *                   example: User Not Authorize
  *       '500':
  *         description: Internal Server Error
  *         content:

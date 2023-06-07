@@ -57,6 +57,8 @@
  *                             type: string
  *                           telepon:
  *                             type: string
+ *                           alamat:
+ *                             type: string
  *                           wa_link:
  *                             type: string
  *                           schedule:
@@ -137,6 +139,8 @@
  *                             type: string
  *                           telepon:
  *                             type: string
+ *                           alamat:
+ *                             type: string
  *                           wa_link:
  *                             type: string
  *                           schedule:
@@ -210,6 +214,8 @@
  *               owner:
  *                 type: string
  *               telepon:
+ *                 type: string
+ *               alamat:
  *                 type: string
  *               category:
  *                 type: string
@@ -362,6 +368,8 @@
  *               owner:
  *                 type: string
  *               telepon:
+ *                 type: string
+ *               alamat:
  *                 type: string
  *               category:
  *                 type: string

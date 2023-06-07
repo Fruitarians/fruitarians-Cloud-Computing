@@ -45,6 +45,7 @@ exports.getVendorSubs = async (req, res, next) => {
                 owner: data.owner,
                 category: data.category,
                 telepon: data.telepon,
+                alamat: data.alamat,
                 wa_link: 'https://api.whatsapp.com/send?phone=62' + data.telepon,
                 schedule: data.schedule,
                 deskripsi: data.deskripsi,
@@ -87,6 +88,7 @@ exports.getVendorSubs = async (req, res, next) => {
                 owner: data.owner,
                 category: data.category,
                 telepon: data.telepon,
+                alamat: data.alamat,
                 wa_link: 'https://api.whatsapp.com/send?phone=62' + data.telepon,
                 schedule: data.schedule,
                 deskripsi: data.deskripsi,
@@ -150,13 +152,14 @@ exports.createVendorSubs = async (req, res, next) => {
         if(telepon.startsWith("0")){
             telepon = telepon.slice(1)
         }
+        const alamat = req.body.alamat
         const category = req.body.category
         const schedule = req.body.schedule
         const deskripsi = req.body.deskripsi
         const creator = req.userId
         // * new obj subs vendor
         const new_subs = new VendorSubs(
-            name, owner, telepon, category, schedule, deskripsi, creator
+            name, owner, telepon, alamat, category, schedule, deskripsi, creator
         )
         const newSubs = {...new_subs}
 
@@ -223,6 +226,7 @@ exports.editvendorSubs = async (req, res, next) => {
         subs_edit.name = req.body.name
         subs_edit.owner = req.body.owner
         subs_edit.telepon = req.body.telepon
+        subs_edit.alamat = req.body.alamat
         subs_edit.category = req.body.category
         subs_edit.schedule = req.body.schedule
         subs_edit.deskripsi = req.body.deskripsi
