@@ -19,6 +19,13 @@ const formatDate = (dateInput) => {
 
 exports.getArticles = async (req, res, next) => {
     try {
+        const user = (await db.collection("users").doc(req.userId).get()).data();
+        if (!user || user.role !== "user") {
+            const err = new Error("User Not Authorized");
+            err.statusCode = statusCode["401_unauthorized"];
+            throw err;
+        }
+
         const articles = await db.collection("artikels").get();
 
         const result = [];
@@ -41,7 +48,7 @@ exports.getArticles = async (req, res, next) => {
         res.status(statusCode["200_ok"]).json({
             message: "Retrieve all data article",
             totalData: result.length,
-            result
+            result,
         });
     } catch (e) {
         if (!e.statusCode) {
@@ -53,6 +60,13 @@ exports.getArticles = async (req, res, next) => {
 
 exports.getArticlesById = async (req, res, next) => {
     try {
+        const user = (await db.collection("users").doc(req.userId).get()).data();
+        if (!user || user.role !== "user") {
+            const err = new Error("User Not Authorized");
+            err.statusCode = statusCode["401_unauthorized"];
+            throw err;
+        }
+
         const { card = false } = req.query;
         const { id } = req.params;
         const articles = await db
@@ -76,7 +90,7 @@ exports.getArticlesById = async (req, res, next) => {
             });
 
             let randomItem = undefined;
-            if (card) {
+            if (card === "true") {
                 const articles = await db.collection("artikels").get();
                 let randomIndex = Math.floor(Math.random() * articles.size);
 
@@ -95,10 +109,13 @@ exports.getArticlesById = async (req, res, next) => {
 
             res.status(statusCode["200_ok"]).json({
                 message: "Get data article random",
-                data: result, randomItem
+                data: result, 
+                randomItem,
             });
         } else {
-            throw new TypeError("Id Not Found");
+            const err = new Error("ID Not Found");
+            err.statusCode = statusCode["404_not_found"];
+            throw err;
         }
     } catch (e) {
         if (!e.statusCode) {
