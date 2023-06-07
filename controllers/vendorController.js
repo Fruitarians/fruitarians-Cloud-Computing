@@ -20,7 +20,7 @@ exports.getVendorSubs = async (req, res, next) => {
             throw_err('User Not Authorized', statusCode['401_unauthorized'])
         }
 
-        //* ------------------ Cek jika pake params ID -> maka cari 1 data terakit saja ------------------
+        //* ------------------ Cek jika pake params ID -> maka cari 1 data terkait saja ------------------
         let vendor_subs
         if(req.params.id_subs){
             //* HANYA BALIKAN 1 DATA DETAIL TERKAIT
@@ -33,6 +33,12 @@ exports.getVendorSubs = async (req, res, next) => {
             }
 
             const data = vendor_detail
+
+            //*! format createdAt (kapan bergabung agar bisa di baca)
+            const date = new Date(data.createdAt._seconds * 1000); // Konversi detik ke milidetik
+            const dateFormatter = new Intl.DateTimeFormat('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+            const formattedDate = dateFormatter.format(date);
+
             const vendor_data = {
                 id: req.params.id_subs,
                 name: data.name,
@@ -42,7 +48,8 @@ exports.getVendorSubs = async (req, res, next) => {
                 wa_link: 'https://api.whatsapp.com/send?phone=62' + data.telepon,
                 schedule: data.schedule,
                 deskripsi: data.deskripsi,
-                delivered: data.delivered
+                delivered: data.delivered,
+                bergabung: formattedDate
             }
 
             return res.status(statusCode['200_ok']).json({
@@ -53,7 +60,6 @@ exports.getVendorSubs = async (req, res, next) => {
         }
         // * ------------------ ------------------ ------------------ ------------------ ------------------
         else {
-            console.log('masuk sini')
             vendor_subs = await db.collection('vendor_subs')
                 .where('creator', '==', req.userId).get()
         }
@@ -69,6 +75,12 @@ exports.getVendorSubs = async (req, res, next) => {
         let user_vendor_subs = []
         vendor_subs.forEach(doc => {
             const data = doc.data()
+
+            //*! format createdAt (kapan bergabung agar bisa di baca)
+            const date = new Date(data.createdAt._seconds * 1000); // Konversi detik ke milidetik
+            const dateFormatter = new Intl.DateTimeFormat('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+            const formattedDate = dateFormatter.format(date);
+
             const vendor_data = {
                 id: doc.id,
                 name: data.name,
@@ -77,7 +89,9 @@ exports.getVendorSubs = async (req, res, next) => {
                 telepon: data.telepon,
                 wa_link: 'https://api.whatsapp.com/send?phone=62' + data.telepon,
                 schedule: data.schedule,
-                deskripsi: data.deskripsi
+                deskripsi: data.deskripsi,
+                delivered: data.delivered,
+                bergabung: formattedDate
             }
 
             if(q){

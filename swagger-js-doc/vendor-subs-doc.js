@@ -63,6 +63,10 @@
  *                             type: string
  *                           deskripsi:
  *                             type: string
+ *                           delivered:
+ *                             type: boolean
+ *                           bergabung:
+ *                             type: string
  *       '401':
  *         description: User Not Authorized
  *         content:
@@ -138,6 +142,10 @@
  *                           schedule:
  *                             type: string
  *                           deskripsi:
+ *                             type: string
+ *                           delivered:
+ *                             type: boolean
+ *                           bergabung:
  *                             type: string
  *       '401':
  *         description: User Not Authorized
