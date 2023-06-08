@@ -40,13 +40,20 @@ const swaggerUIOptions = {
     definition : {
         openapi: '3.0.0',
         info: {
-            title: "Capstone API",
+            title: "Fruitarians API",
             version : "1.0.0",
-            description: "sing penting yakin!"
+            description: "Fruitarians API Documentation (Bangkit Product Based Capstone Project - C23PS448) <br><br>To access the endpoints that require authorization, please set up authentication first using bearerAuth with an access token in the form of a JWT obtained from the /auth/login endpoint. <b>This API is used to integrate the Frontend with the noSQL Database</b>. <br><br>Fruitarians Object Model is as follows: <ul> <li>Users - A user of the system, based on roles property, it is divided into three categories: user, store, and vendor, each with different limitations as well.</li> <li>Buah - The products are owned by users with the toko role, and users with the toko role have CRUD access to this model</li> <li>Vendor Subs - The list of stores subscribed to users with the vendor role, and users with the vendor role have CRUD access to this model</li>  </ul> ",
+            contact:
+                {
+                    name: 'Fruitarians - C23-PS448',
+                    email: 'A210DSX3159@bangkit.academy',
+                    url: 'https://github.com/Fruitarians'
+                }
         },
         servers : [
             {
                 url: '{protocol}://localhost:' + PORT,
+                description: 'Local Development Server',
                 variables: {
                     protocol: {
                         enum: [
@@ -55,7 +62,12 @@ const swaggerUIOptions = {
                     }
 
                 }
+            },
+            {
+                url: 'https://test-api-386719.et.r.appspot.com',
+                description: 'Online Testing Deployment Development Server'
             }
+
         ],
         components: {
             securitySchemes: {

@@ -27,9 +27,11 @@ const processFile = require('../middleware/upload')
 
 router.get('/bookmark', isAuth, userRoleController.getAllBookmark)
 
+router.get('/bookmark/:bookmark_userId', isAuth, userRoleController.getFollowingInfo)
+
 router.post('/bookmark', isAuth, userRoleController.postBookmark)
 
-router.delete('/bookmark', isAuth, userRoleController.deleteBookmark)
+router.delete('/bookmark/:bookmark_userId', isAuth, userRoleController.deleteBookmark)
 
 
 //*! -------------------------------------------------------------------------------------------------

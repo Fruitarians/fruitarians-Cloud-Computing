@@ -96,6 +96,70 @@
 
 
 
+// * GET data user sudah bookmark(follow atau belum)
+// * GET /user/bookmark/{bookmark_userId}
+/**
+ * @swagger
+ * /user/bookmark/{bookmark_userId}:
+ *   get:
+ *     summary: check data user sudah dibookmark atau belum
+ *     tags: [User Exc]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - name: bookmark_userId
+ *         in: path
+ *         description: ID yang akan dicek apakah user sudah bookmark(follow) atau belum
+ *         required: true
+ *
+ *     responses:
+ *       '200':
+ *         description: Success get response
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 errors:
+ *                   example: false
+ *                 message:
+ *                   example: Bookmarked Data User Info
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     bookmarked_userId:
+ *                       type: string
+ *                     bookmarked:
+ *                       type: boolean
+ *       '401':
+ *         description: Not Authorized
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 errors:
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: Not Authorized Access
+ *       '500':
+ *         description: Internal Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 errors:
+ *                   example: true
+ *                 message:
+ *                   type: string
+ */
+
+
+
+
+
 // * POST satu data untuk dmasukan ke bookmark user array
 // * POST /user/bookmark
 /**
@@ -159,24 +223,20 @@
 
 
 // * DELETE satu data dari daftar bookmark user
-// * DELETE /user/bookmark
+// * DELETE /user/bookmark/{bookmark_userId}
 /**
  * @swagger
- * /user/bookmark:
+ * /user/bookmark/{bookmark_userId}:
  *   delete:
  *     summary: hapus sebuah data bookmark yang sudah user simpan
  *     tags: [User Exc]
  *     security:
  *       - bearerAuth: []
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               delete_bookmark_userId:
- *                 type: string
+ *     parameters:
+ *       - name: bookmark_userId
+ *         in: path
+ *         description: ID User (yang sudah dibookmark) yang ingin dihapus
+ *         required: true
  *
  *     responses:
  *       '200':

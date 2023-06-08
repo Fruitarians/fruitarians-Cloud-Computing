@@ -10,6 +10,7 @@ const statusCode = require('../util/response').httpStatus_keyValue
 // * firestore
 const admin = require('firebase-admin')
 const db = require('../database/db')
+const {check} = require("express-validator");
 
 
 //* -------------------------- controller -------------------------- *//
@@ -25,7 +26,7 @@ exports.getAllBookmark = async (req, res, next) => {
 
         let dataBookmark = []
         let totalData = 0
-        if(user.bookmark){
+        if(user.bookmark.length >= 1){
             const data = (await db.collection('users').where(admin.firestore.FieldPath.documentId(), 'in', user.bookmark).get())
 
             data.forEach(doc => {
@@ -61,6 +62,42 @@ exports.getAllBookmark = async (req, res, next) => {
     } catch (e) {
         if(!e.statusCode) {
             e.statusCode = statusCode['500_internal_server_error']
+        }
+        next(e)
+    }
+}
+
+
+
+
+
+exports.getFollowingInfo = async (req, res, next) => {
+    try{
+        const user = (await db.collection('users').doc(req.userId).get()).data()
+        if(!user || user.role !== 'user'){
+            const err = new Error('Not Authorized Access')
+            err.statusCode = statusCode['401_unauthorized']
+            throw err
+        }
+
+        const check_bookmark = req.params.bookmark_userId
+        let bookmarked = false
+        if(user.bookmark.includes(check_bookmark)){
+            bookmarked = true
+        }
+
+        res.status(statusCode['200_ok']).json({
+            errors: false,
+            message: 'Bookmarked Data User Info',
+            data: {
+                bookmarked_userId: check_bookmark,
+                bookmarked: bookmarked
+            }
+        })
+
+    } catch (e) {
+        if(!e.statusCode){
+            e.statusCode = statusCode['400_bad_request']
         }
         next(e)
     }
@@ -130,7 +167,7 @@ exports.deleteBookmark = async (req, res, next) => {
             throw err
         }
 
-        const id = req.body.delete_bookmark_userId //*! id bookmark yang ingin dihapus
+        const id = req.params.bookmark_userId //*! id bookmark yang ingin dihapus
 
         //*? response message
         let message = 'Data Bookmark Not Found On User Data'
