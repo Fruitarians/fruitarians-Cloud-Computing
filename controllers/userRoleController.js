@@ -31,13 +31,23 @@ exports.getAllBookmark = async (req, res, next) => {
 
             data.forEach(doc => {
                 const dataUser = doc.data()
+
+                //*! format createdAt (kapan bergabung agar bisa di baca)
+                const date = new Date(dataUser.createdAt._seconds * 1000);
+                const dateFormatter = new Intl.DateTimeFormat('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+                const formattedDate = dateFormatter.format(date);
+
                 const dataPush = {
                     id: doc.id,
                     name: dataUser.name,
+                    email: dataUser.email,
+                    telepon: dataUser.telepon,
                     alamat: dataUser.alamat ,
                     deskripsi: dataUser.deskripsi,
                     gambar_profil: dataUser.gambar_profil,
-                    wa_link: 'https://api.whatsapp.com/send?phone=62' + dataUser.telepon
+                    wa_link: 'https://api.whatsapp.com/send?phone=62' + dataUser.telepon,
+                    bergabung: formattedDate,
+                    jam_operasional: dataUser.jam_operasional
                 }
                 dataBookmark.push(dataPush)
             })

@@ -63,7 +63,8 @@ exports.login = async (req, res, next) => {
                 accessToken : accessToken,
                 email : user.email,
                 name: user.name,
-                token_type : 'Bearer'
+                token_type : 'Bearer',
+                role: user.role
             }
         })
 
@@ -93,7 +94,7 @@ exports.signup = async (req, res, next) => {
         const name = req.body.name
         const role = req.body.role
 
-        const negara = req.body.negara
+        const negara = req.body.negara 
         const kota = req.body.kota
         const deskripsi_alamat = req.body.deskripsi_alamat
         const alamat = {

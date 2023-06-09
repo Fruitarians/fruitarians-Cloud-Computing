@@ -52,6 +52,10 @@
  *                         type: string
  *                       name:
  *                         type: string
+ *                       email:
+ *                         type: string
+ *                       telepon:
+ *                         type: string
  *                       alamat:
  *                         type: object
  *                         properties:
@@ -67,6 +71,19 @@
  *                         type: string
  *                       wa_link:
  *                         type: string
+ *                       bergabung:
+ *                         type: string
+ *                       jam_operasional:
+ *                         type: object
+ *                         properties:
+ *                           jam_buka:
+ *                             type: string
+ *                           jam_tutup:
+ *                             type: string
+ *                           hari_buka_awal:
+ *                             type: string
+ *                           hari_buka_akhir:
+ *                             type: string
  *       '401':
  *         description: Not Authorized
  *         content:
