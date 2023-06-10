@@ -384,7 +384,12 @@ exports.changeInfo = async (req, res, next) => {
             alamat: user.alamat,
             telepon: user.telepon,
             deskripsi: 'not authorized to change',
-            jam_operasional: 'not authorized to change',
+            jam_operasional: {
+                jam_buka: 'not authorized to change',
+                jam_tutup: 'not authorized to change',
+                hari_buka_awal: "not authorized to change",
+                hari_buka_akhir: "not authorized to change"
+            },
             gambar_profil: 'not authorized to change'
         }
         if(user.role !== 'user'){

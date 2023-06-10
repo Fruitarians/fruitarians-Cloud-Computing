@@ -66,6 +66,10 @@ const swaggerUIOptions = {
             {
                 url: 'https://test-api-386719.et.r.appspot.com',
                 description: 'Online Testing Deployment Development Server'
+            },
+            {
+                url: 'https://fruitarians-model-cwdelhrmna-et.a.run.app/api',
+                description:  'Machine Learning Model Development Server'
             }
 
         ],

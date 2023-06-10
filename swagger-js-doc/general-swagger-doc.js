@@ -299,6 +299,13 @@
 /**
  * @swagger
  * tags:
+ *   name: Machine Learning
+ *   description: Prediksi kesegaran buah (perhatikan pemilihan server di atas) menggunakan server/base url berbeda dari endpoint lainnya
+ */
+
+/**
+ * @swagger
+ * tags:
  *   name: Auth
  *   description: Proses autentikasi akun
  */
