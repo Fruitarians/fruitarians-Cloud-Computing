@@ -23,7 +23,7 @@ const processFile = require('../middleware/upload')
  * ? merupakan routes untuk endpoint role USER untuk kemampuan khusus dari role USER
  * ? ---------------------------
  */
-// *! ------------- BOOKMARK -------------
+// *! ------------------------------------ BOOKMARK ------------------------------------
 
 router.get('/bookmark', isAuth, userRoleController.getAllBookmark)
 
@@ -34,7 +34,24 @@ router.post('/bookmark', isAuth, userRoleController.postBookmark)
 router.delete('/bookmark/:bookmark_userId', isAuth, userRoleController.deleteBookmark)
 
 
-//*! -------------------------------------------------------------------------------------------------
+//*! --------------------------------------------------------------------------------------
+
+
+
+
+
+// *! ------------------------------------ CART ------------------------------------
+
+router.get('/carts', isAuth, userRoleController.getCarts)
+
+router.post('/carts', isAuth, userRoleController.postCart)
+
+router.delete('/carts/:id_cart/:id_buah', isAuth, userRoleController.deleteOneBuah)
+
+router.delete('/carts/:id_cart', isAuth, userRoleController.deleteCarts)
+
+//*! --------------------------------------------------------------------------------------
+
 
 
 
@@ -44,7 +61,7 @@ router.delete('/bookmark/:bookmark_userId', isAuth, userRoleController.deleteBoo
 router.get('/info', isAuth, userController.getInfo)
 
 // *! ---------------------------- DOKUMENTASI ada di "toko_vendor-doc.js" ----------------------------
-
+ 
 router.get('/:role', isAuth, userController.getAllRole)
 
 router.get('/:role/:id', isAuth, userController.detailInfo)

@@ -4,7 +4,7 @@ const processFile = require('../middleware/upload')
 const statusCode = require('../util/response').httpStatus_keyValue
 
 const storage = new Storage({ keyFilename: './cloud_storage_key.json' })
-const bucket = storage.bucket('test-api-kepston')
+const bucket = storage.bucket('fruitarians')
 
 const crypto = require('crypto')
 
@@ -67,6 +67,7 @@ exports.uploadFile = async (req, res, next) => {
         return publicUrl
 
     } catch (e) {
+        console.log(e)
         return false
     }
 }
@@ -95,6 +96,7 @@ exports.deleteItem = async (req, res, next) => {
         return true
 
     } catch (e) {
+        console.log(e)
         return false
     }
 }

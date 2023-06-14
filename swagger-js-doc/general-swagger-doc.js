@@ -320,8 +320,15 @@
 /**
  * @swagger
  * tags:
- *   name: User Exc
- *   description: proses khusus untuk role user yang hanya bisa dilakukan oleh role user saja
+ *   name: User Exc - Bookmark
+ *   description: proses khusus untuk role user yang hanya bisa dilakukan oleh role user saja proses bookmark
+ */
+
+/**
+ * @swagger
+ * tags:
+ *   name: User Exc - Carts
+ *   description: proses khusus untuk role user yang hanya bisa dilakukan oleh role user saja proses carts
  */
 
 /**

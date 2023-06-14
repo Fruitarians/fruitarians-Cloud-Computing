@@ -25,15 +25,7 @@ const buahRoutes = require('./routes/buah')
 const articleRoutes = require('./routes/article')
 const vendorSubs = require('./routes/vendor')
 
-//const lokasiRoutes = require('./routes/lokasi')
-
 //* ------------------------------- app config ------------------------------- *//
-
-// *! rotate logging config (config seperti di bawah gabisa di[alao do App Eninge/ Cyclic)
-// const accessLogStream = rotating_file_stream.createStream('access.log', {
-//     interval : '1d',
-//     path : path.join(__dirname, 'logs')
-// })
 
 // * swagger config
 const swaggerUIOptions = {
@@ -52,26 +44,13 @@ const swaggerUIOptions = {
         },
         servers : [
             {
-                url: '{protocol}://localhost:' + PORT,
-                description: 'Local Development Server',
-                variables: {
-                    protocol: {
-                        enum: [
-                            '', 'http', 'https'
-                        ]
-                    }
-
-                }
-            },
-            {
-                url: 'https://test-api-386719.et.r.appspot.com',
-                description: 'Online Testing Deployment Development Server'
+                url:'https://capstone-project-387215.et.r.appspot.com',
+                description:  'Frutarians Main API'
             },
             {
                 url: 'https://fruitarians-model-cwdelhrmna-et.a.run.app/api',
-                description:  'Machine Learning Model Development Server'
+                description:  'Machine Learning Model API'
             }
-
         ],
         components: {
             securitySchemes: {
@@ -91,16 +70,16 @@ const swaggerSpecs = swaggerJSDoc(swaggerUIOptions)
 const app = express()
 
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: false })); //*! karena ada beberapa endpoint akan terima request multipart/form-data
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors())
 
 app.use( helmet({
-        contentSecurityPolicy: false, // disable content security policy
-        hidePoweredBy: true, // hide X-Powered-By header
-        hsts: false, // { maxAge: 31536000, includeSubDomains: true }, // enable HSTS with maxAge 1 year and includeSubDomains
-        noCache: true, // enable noCache header
-        referrerPolicy: { policy: 'no-referrer' } // set referrer policy to no-referrer
-    }) );
+    contentSecurityPolicy: false,
+    hidePoweredBy: true,
+    hsts: false,
+    noCache: true,
+    referrerPolicy: { policy: 'no-referrer' }
+}) );
 
 app.use(globalRateLimiter)
 
@@ -109,6 +88,7 @@ app.use(expressStatusMonitor())
 
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerSpecs))
 
+
 app.use('/auth', authRoutes)
 app.use('/user/toko', tokoRoutes)
 app.use('/user', userRoutes)
@@ -116,8 +96,6 @@ app.use('/file', fileRoutes)
 app.use('/buah', buahRoutes)
 app.use('/articles', articleRoutes)
 app.use('/vendor', vendorSubs)
-
-//app.use(lokasiRoutes)
 
 //* global errorHandling
 app.use((error, req, res, next) => {
@@ -134,7 +112,6 @@ app.use((error, req, res, next) => {
 async function connectServer() {
     try {
         app.listen(PORT)
-        console.log('Connected to port ' + PORT)
     } catch (e) {
         console.log(e)
     }
