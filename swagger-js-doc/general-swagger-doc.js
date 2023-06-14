@@ -288,6 +288,90 @@
 
 
 
+
+
+
+
+// * VENDOR SUBS
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Vendor Subs:
+ *       type: object
+ *       required:
+ *         - name
+ *         - owner
+ *         - telepon
+ *         - alamat
+ *         - category
+ *         - schedule
+ *         - deskripsi
+ *         - creator
+ *       description: Struktur data dari Vendor Subs
+ *       properties:
+ *         name:
+ *           type: string
+ *         owner:
+ *           type: string
+ *         telepon:
+ *           type: string
+ *         alamat:
+ *           type: string
+ *         category:
+ *           type: string
+ *         schedule:
+ *           type: string
+ *         deskripsi:
+ *           type: string
+ *         creator:
+ *           type: string
+ *         delivered:
+ *           type: boolean
+ *         createdAt:
+ *           type: date
+ *         updatedAt:
+ *           type: date
+ */
+
+
+
+
+
+
+
+
+// * CARTS
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Carts:
+ *       type: object
+ *       required:
+ *         - id_toko
+ *         - id_user
+ *         - buah
+ *       description: Struktur data dari Cart
+ *       properties:
+ *         id_toko:
+ *           type: string
+ *         id_user:
+ *           type: string
+ *         buah:
+ *           type: array
+ *           items:
+ *             type: string
+ *         createdAt:
+ *           type: date
+ *         updatedAt:
+ *           type: date
+ */
+
+
+
+
+
 // * ---- Swagger Tags
 /**
  * @swagger
