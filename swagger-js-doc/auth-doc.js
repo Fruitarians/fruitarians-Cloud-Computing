@@ -151,23 +151,23 @@
  *                 example: Password1
  *               name:
  *                 type: string
- *                 example: nama saya
+ *                 example: Lorem Ipsum
  *               role:
  *                 type: string
  *                 enum: [user, toko, vendor]
  *                 example: toko
  *               telepon:
  *                 type: string
- *                 example: 8572717172839
+ *                 example: 08572717172839
  *               negara:
  *                 type: string
- *                 example: burkina faso
+ *                 example: Indonesia
  *               kota:
  *                 type: string
- *                 example: gulag
+ *                 example: Purbalingga
  *               deskripsi_alamat:
  *                 type: string
- *                 example: depan kampus uph rt10/rw23
+ *                 example: Kalimanah wetan RT01/RW10 Blok J no34A
  *
  *
  *     responses:

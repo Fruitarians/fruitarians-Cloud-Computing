@@ -84,6 +84,55 @@
  *                             type: string
  *                           hari_buka_akhir:
  *                             type: string
+ *       '200_card':
+ *         description: success get cards data
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 errors:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   example: Get toko Cards Data
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     id:
+ *                       type: string
+ *                     name:
+ *                       type: string
+ *                     email:
+ *                       type: string
+ *                     telepon:
+ *                       type: string
+ *                     wa_link:
+ *                       type: string
+ *                     gambar_profil:
+ *                       type: string
+ *                     alamat:
+ *                       type: object
+ *                       properties:
+ *                         kota:
+ *                           type: string
+ *                         negara:
+ *                           type: string
+ *                         deskripsi_alamat:
+ *                           type: string
+ *                     bergabung:
+ *                       type: string
+ *                     jam_operasional:
+ *                       type: object
+ *                       properties:
+ *                         jam_buka:
+ *                           type: string
+ *                         jam_tutup:
+ *                           type: string
+ *                         hari_buka_awal:
+ *                           type: string
+ *                         hari_buka_akhir:
+ *                           type: string
  *       '401':
  *         description: not authorized
  *         content:
@@ -148,7 +197,7 @@
  *
  *
  *     responses:
- *       '200':
+ *       '200_toko':
  *         description: get data success
  *         content:
  *           application/json:
@@ -176,6 +225,8 @@
  *                           deskripsi_alamat:
  *                             type: string
  *                     telepon:
+ *                       type: string
+ *                     deskripsi:
  *                       type: string
  *                     jam_operasional:
  *                       type: object
@@ -212,8 +263,54 @@
  *                             type: string
  *                           gambar:
  *                             type: string
- *
- *
+ *       '200_vendor':
+ *         description: get data success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 errors:
+ *                   example: false
+ *                 message:
+ *                   example: Get Detail User Info
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     id:
+ *                       type: string
+ *                     name:
+ *                       type: string
+ *                     alamat:
+ *                         type: object
+ *                         properties:
+ *                           negara:
+ *                             type: string
+ *                           kota:
+ *                             type: string
+ *                           deskripsi_alamat:
+ *                             type: string
+ *                     telepon:
+ *                       type: string
+ *                     deskripsi:
+ *                       type: string
+ *                     jam_operasional:
+ *                       type: object
+ *                       properties:
+ *                         jam_buka:
+ *                           type: string
+ *                         jam_tutup:
+ *                           type: string
+ *                         hari_buka_awal:
+ *                           type: string
+ *                         hari_buka_akhir:
+ *                           type: string
+ *                     wa_link:
+ *                       type: string
+ *                     bergabung:
+ *                       type: string
+ *                     gambar_profil:
+ *                       type: string
  *
  *       '404':
  *         description: id not valid
