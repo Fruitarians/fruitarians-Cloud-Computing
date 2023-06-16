@@ -1,5 +1,15 @@
 # Fruitarians - Cloud Computing
 
+## Base URL
+
+Fruitarians API Documentation (Bangkit Product Based Capstone Project - C23PS448)
+
+```sh
+https://capstone-project-387215.et.r.appspot.com/api-docs/
+```
+
+## Cloud Technology
+
 _The cloud technology used in Fruitarians_
 
 **Powered by:**
