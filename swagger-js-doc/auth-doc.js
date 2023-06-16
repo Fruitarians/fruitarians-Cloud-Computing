@@ -1,54 +1,5 @@
 // * -------------------------------- Route Doc -------------------------------- * //
 
-// * --------------- GET GET GET
-
-// * /auth/
-/**
- * @swagger
- * /auth/:
- *   get:
- *     summary: check connection
- *     tags: [Connection Check]
- *
- *     responses:
- *       '200':
- *         description: OK, Connection Success
- */
-
-
-// * /auth/user
-/**
- * @swagger
- * /auth/user:
- *   get:
- *     summary: check login with auth header
- *     tags: [Connection Check]
- *     security:
- *       - bearerAuth : []
- *
- *     responses:
- *       '200':
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   example: User Login
- *                 user:
- *                   type: object
- *                   properties:
- *                     id:
- *                       type: string
- *                     name:
- *                       type: string
- *                     role:
- *                       type: string
- *         description: Success Login
- *       '500':
- *         description: Internal server error
- */
-
 
 
 
