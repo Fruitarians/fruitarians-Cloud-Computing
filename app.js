@@ -48,7 +48,7 @@ const swaggerUIOptions = {
                 description:  'Frutarians Main API'
             },
             {
-                url: 'https://fruitarians-model-cwdelhrmna-et.a.run.app/api',
+                url: 'https://fruitarians-model-endpoint-cwdelhrmna-et.a.run.app/api',
                 description:  'Machine Learning Model API'
             }
         ],
