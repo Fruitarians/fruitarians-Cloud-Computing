@@ -73,7 +73,7 @@ Docs: [cloud-storage-docs](https://cloud.google.com/storage/docs)
 
 ### Cloud Run
 
-<img src="https://www.vectorlogo.zone/logos/google_cloud_run/google_cloud_run-ar21.svg" width="150" height="50"/>
+<img src="https://www.vectorlogo.zone/logos/google_cloud_run/google_cloud_run-ar21.svg" width="150" height="150"/>
 
 This cloud run service **`has been deployed`**. on development environment.
 
