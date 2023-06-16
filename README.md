@@ -25,7 +25,7 @@ There are four applications of Google Cloud technologies in the **Fruitarians** 
 
 ### Firestore
 
-<img src="https://firebase.google.com/downloads/brand-guidelines/SVG/logo-built_white.svg" width="120" height="100"/>
+<img src="https://cdn.cdnlogo.com/logos/f/45/firestore.svg" width="120" height="100"/>
 
 This firestore service **`has been deployed`** on development environment.
 
